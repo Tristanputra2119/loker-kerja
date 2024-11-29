@@ -17,7 +17,12 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
-            $table->rememberToken();
+            $table->enum('role', ['user', 'company'])->default('user'); // Peran pengguna
+            $table->string('profile_picture')->nullable(); // Foto profil
+            $table->string('phone_number', 20)->nullable(); // Nomor telepon
+            $table->text('address')->nullable(); // Alamat
+            $table->text('description')->nullable(); // Untuk perusahaan, deskripsi perusahaan
+            $table->string('industry', 100)->nullable(); // Untuk perusahaan, bidang industri
             $table->timestamps();
         });
 
