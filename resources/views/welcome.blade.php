@@ -85,7 +85,7 @@
             <!-- Card 2 -->
             <div class="bg-white [box-shadow:0_4px_8px_rgba(169,169,169,0.3)] rounded-lg p-6 text-center">
                 <p class="text-3xl font-bold text-blue-500">77.25%</p>
-                <p class="text-gray-600 mt-2">Lulusan Primakara bekerja sesuai bidang studi</p>
+                <p class="text-gray-600 mt-2">Lulusan Primakara bekerja sesuai bidang studii</p>
             </div>
 
             <!-- Card 3 -->
