@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('applications', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('job_posting_id')->constrained('job_postings')->cascadeOnDelete(); // Lowongan
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete(); // Pelamar
+            $table->foreignId('job_id')->constrained('jobs')->onDelete('cascade'); // Relasi ke tabel jobs
+            $table->foreignId('user_id')->constrained('users')->onDelete('cascade'); // Relasi ke tabel users
             $table->enum('status', ['Pending', 'Accepted', 'Rejected'])->default('Pending'); // Status lamaran
-            $table->text('cover_letter')->nullable(); // Surat lamaran
+            $table->timestamp('applied_at')->useCurrent(); // Waktu melamar
             $table->timestamps();
         });
     }

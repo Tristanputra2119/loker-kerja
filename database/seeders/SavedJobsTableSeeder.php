@@ -6,19 +6,17 @@ use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
-class ApplicationSeeder extends Seeder
+class SavedJobsTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
      */
     public function run(): void
     {
-        DB::table('applications')->insert([
+        DB::table('saved_jobs')->insert([
             [
-                'job_posting_id' => 1,
-                'user_id' => 1, // ID user pelamar
-                'status' => 'Pending',
-                'cover_letter' => 'Saya memiliki pengalaman 3 tahun di bidang pengembangan perangkat lunak.',
+                'job_id' => 2, // Sesuaikan dengan ID job
+                'user_id' => 2, // Sesuaikan dengan ID user
                 'created_at' => now(),
                 'updated_at' => now(),
             ],

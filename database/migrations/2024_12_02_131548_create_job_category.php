@@ -11,10 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('category_job_posting', function (Blueprint $table) {
+        Schema::create('job_categories', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('job_posting_id')->constrained('job_postings')->cascadeOnDelete(); // Loker
-            $table->foreignId('category_id')->constrained('categories')->cascadeOnDelete(); // Kategori
+            $table->string('name'); // Nama kategori, misalnya: IT, Marketing
+            $table->string('slug')->unique(); // Slug untuk URL
             $table->timestamps();
         });
     }
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('category_job_posting');
+        Schema::dropIfExists('job_category');
     }
 };
