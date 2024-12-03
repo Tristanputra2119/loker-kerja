@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
+use App\Http\Controllers\HomeController;
 
 // Halaman Welcome
 Route::get('/', function () {
@@ -13,25 +14,12 @@ Route::get('/', function () {
 // Auth Routes
 Auth::routes();
 
-// Dashboard Route untuk HomeController
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+// Dashboard Route for Admin and Company
+Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard')->middleware('auth');
 
-// Route tambahan untuk menampilkan pesan berdasarkan role
-Route::get('/home', function () {
-    $user = Auth::user();
+// Home Route for General Users
+Route::get('/home', [HomeController::class, 'home'])->name('home')->middleware('auth');
 
-    // Cek role pengguna dan tentukan pesan
-    $message = match ($user->role) {
-        'admin' => 'Hello Admin',
-        'company' => 'Hello Company',
-        default => 'Hello User',
-    };
-
-    return view('home', compact('message'));
-})->name('home')->middleware('auth');
-
-Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
-
-Route::get('/companies/create', [CompanyController::class, 'create'])->name('companies.create');
-Route::post('/companies/store', [CompanyController::class, 'store'])->name('companies.store');
+// Resource Controllers
+Route::resource('users', UserController::class);
+Route::resource('companies', CompanyController::class);

@@ -25,16 +25,22 @@ class LoginController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/home';
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
-        $this->middleware('auth')->only('logout');
+    }
+
+    /**
+     * Redirect users after login based on their role.
+     */
+    protected function authenticated($request, $user)
+    {
+        if ($user->role === 'user') {
+            return redirect('/1');
+        }
+        if ($user->role === 'admin' || $user->role === 'company') {
+            return redirect('/home');
+        }
     }
 }
