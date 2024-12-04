@@ -18,72 +18,38 @@
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
-<body class="h-full bg-gray-100 overflow-hidden">
+<body class="h-full bg-gray-100">
     <div id="app" class="h-full flex flex-col">
-        <nav class="bg-white shadow-md flex items-center justify-between p-2">
+        <!-- Navbar -->
+        <nav class="bg-white shadow-md flex items-center justify-between p-4">
+            <!-- Logo -->
             <a href="{{ url('/') }}" class="text-2xl font-bold text-gray-800">
-                {{ config('app.name', 'PCC') }}
+                {{ config('app.name', 'Laravel') }}
             </a>
 
-            <div class="flex items-center space-x-4">
-                <!-- Authentication Links -->
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-4">
                 @guest
-                <div class="flex space-x-4">
-                    @if (Route::has('login'))
-                    <a href="{{ route('login') }}" class="text-blue-600 hover:bg-blue-100 px-4 py-2 rounded-md transition">Login</a>
-                    @endif
-                    @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="text-blue-600 bg-blue-100 hover:bg-blue-200 px-4 py-2 rounded-md transition">Register</a>
-                    @endif
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
-                    <ul class="navbar-nav ms-auto">
-                        <!-- Authentication Links -->
-                        @guest
-                            @if (Route::has('login'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
-                                </li>
-                            @endif
-
-                            @if (Route::has('register'))
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{{ route('register') }}">{{ __('Register') }}</a>
-                                </li>
-                            @endif
-                        @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }}
-                                </a>
-
-                                <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                        {{ __('Logout') }}
-                                    </a>
-
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                        @csrf
-                                    </form>
-                                </div>
-                            </li>
-                        @endguest
-                    </ul>
-                </div>
+                @if (Route::has('login'))
+                <a href="{{ route('login') }}" class="text-blue-600 hover:bg-blue-100 px-4 py-2 rounded-md transition">
+                    Login
+                </a>
+                @endif
+                @if (Route::has('register'))
+                <a href="{{ route('register') }}" class="text-blue-600 bg-blue-100 hover:bg-blue-200 px-4 py-2 rounded-md transition">
+                    Register
+                </a>
+                @endif
                 @else
                 <div class="relative">
-                    <button class="flex items-center space-x-2 bg-gray-200 p-2 rounded-md hover:bg-gray-300 transition focus:outline-none" id="dropdownButton" aria-haspopup="true" aria-expanded="false">
+                    <button class="flex items-center space-x-2 bg-gray-200 p-2 rounded-md hover:bg-gray-300 transition focus:outline-none" id="dropdownButton">
                         <span class="font-medium text-gray-800">{{ Auth::user()->name }}</span>
                         <i class="fas fa-chevron-down"></i>
                     </button>
-
-                    <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="px-2 py-1">
+                    <div class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg dropdown-menu">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="w-full text-left text-gray-800 hover:bg-gray-100 px-2 py-1 rounded-md">
+                            <button type="submit" class="w-full text-left text-gray-800 hover:bg-gray-100 px-4 py-2 rounded-md">
                                 {{ __('Logout') }}
                             </button>
                         </form>
@@ -93,15 +59,52 @@
             </div>
 
             <!-- Mobile Menu Button -->
-            <button class="md:hidden flex items-center text-gray-800" id="mobileMenuButton">
+            <button class="md:hidden flex items-center text-gray-800 focus:outline-none" id="mobileMenuButton">
                 <i class="fas fa-bars"></i>
             </button>
         </nav>
 
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-white shadow-md p-4" id="mobileMenu">
+            @guest
+            @if (Route::has('login'))
+            <a href="{{ route('login') }}" class="block text-blue-600 hover:bg-blue-100 px-4 py-2 rounded-md transition">
+                Login
+            </a>
+            @endif
+            @if (Route::has('register'))
+            <a href="{{ route('register') }}" class="block text-blue-600 bg-blue-100 hover:bg-blue-200 px-4 py-2 rounded-md transition">
+                Register
+            </a>
+            @endif
+            @else
+            <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="w-full text-left text-gray-800 hover:bg-gray-100 px-4 py-2 rounded-md">
+                    {{ __('Logout') }}
+                </button>
+            </form>
+            @endguest
+        </div>
+
+        <!-- Main Content -->
         <main class="flex-1 overflow-auto">
             @yield('content')
         </main>
     </div>
+
+    <!-- Dropdown Toggle Script -->
+    <script>
+        document.getElementById('dropdownButton')?.addEventListener('click', function() {
+            const menu = document.querySelector('.dropdown-menu');
+            menu?.classList.toggle('hidden');
+        });
+
+        document.getElementById('mobileMenuButton')?.addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu?.classList.toggle('hidden');
+        });
+    </script>
 </body>
 
 </html>
