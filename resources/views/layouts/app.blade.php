@@ -25,7 +25,6 @@
                 {{ config('app.name', 'PCC') }}
             </a>
 
-<<<<<<< HEAD
             <div class="flex items-center space-x-4">
                 <!-- Authentication Links -->
                 @guest
@@ -36,7 +35,6 @@
                     @if (Route::has('register'))
                     <a href="{{ route('register') }}" class="text-blue-600 bg-blue-100 hover:bg-blue-200 px-4 py-2 rounded-md transition">Register</a>
                     @endif
-=======
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -74,7 +72,6 @@
                             </li>
                         @endguest
                     </ul>
->>>>>>> ece380b58ea06f68d00e4dabb155a16b90af937c
                 </div>
                 @else
                 <div class="relative">
