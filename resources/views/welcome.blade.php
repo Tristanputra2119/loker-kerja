@@ -13,7 +13,11 @@
 
 <body>
     <!-- Header with Blue Theme -->
+<<<<<<< HEAD
     <header class="bg-white text-black py-4 [box-shadow:0_4px_8px_rgba(169,169,169,0.1)] sticky top-0 z-50">
+=======
+    <header class="bg-white text-black py-4 [box-shadow:0_4px_8px_rgba(169,169,169,0.1)]">
+>>>>>>> ece380b58ea06f68d00e4dabb155a16b90af937c
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
                 <div class="text-lg font-bold">
@@ -134,6 +138,7 @@
     </section>
 
 
+<<<<<<< HEAD
     <!-- Footer Section -->
     <footer class="bg-[#00B4DB] text-white py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -185,3 +190,8 @@
 </body>
 
 </html>
+=======
+</body>
+
+</html>
+>>>>>>> ece380b58ea06f68d00e4dabb155a16b90af937c

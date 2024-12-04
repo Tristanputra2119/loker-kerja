@@ -2,18 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
-class Application extends Model
+class SavedJobs extends Model
 {
     use HasFactory;
 
     protected $fillable = [
         'job_id',
         'user_id',
-        'status',
-        'applied_at',
     ];
 
     public function user()

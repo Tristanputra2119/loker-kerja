@@ -2,27 +2,43 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
+     * Show the dashboard based on role.
      *
-     * @return void
+     * @return \Illuminate\Contracts\View\View
      */
-    public function __construct()
+    public function dashboard()
     {
-        $this->middleware('auth');
+        $user = Auth::user();
+
+        // Redirect based on role
+        if ($user->role === 'admin' || $user->role === 'company') {
+            return view('admin.dashboard', ['message' => "Hello {$user->role}"]);
+        }
+
+        // Redirect to home for other roles
+        return redirect()->route('home');
     }
 
     /**
-     * Show the application dashboard.
+     * Show the home page for general users.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return \Illuminate\Contracts\View\View
      */
-    public function index()
+    public function home()
     {
-        return view('home');
+        $user = Auth::user();
+
+        // Check if the role is admin or company and redirect to dashboard
+        if ($user->role === 'admin' || $user->role === 'company') {
+            return redirect()->route('dashboard');
+        }
+
+        // Default message for regular users
+        return view('home', ['message' => 'Hello User']);
     }
 }

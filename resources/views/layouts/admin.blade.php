@@ -1,6 +1,5 @@
 <!doctype html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
-
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -11,32 +10,27 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
+    <link rel="dns-prefetch" href="//fonts.bunny.net">
     <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
+            <div class="container">
+                <a class="navbar-brand" href="{{ url('/') }}">
+                    {{ config('app.name', 'Laravel') }}
+                </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-<body class="h-full bg-gray-100 overflow-hidden">
-    <div id="app" class="h-full flex flex-col">
-        <nav class="bg-white shadow-md flex items-center justify-between p-2">
-            <a href="{{ url('/') }}" class="text-2xl font-bold text-gray-800">
-                {{ config('app.name', 'PCC') }}
-            </a>
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <!-- Left Side Of Navbar -->
+                    <ul class="navbar-nav me-auto">
 
-<<<<<<< HEAD
-            <div class="flex items-center space-x-4">
-                <!-- Authentication Links -->
-                @guest
-                <div class="flex space-x-4">
-                    @if (Route::has('login'))
-                    <a href="{{ route('login') }}" class="text-blue-600 hover:bg-blue-100 px-4 py-2 rounded-md transition">Login</a>
-                    @endif
-                    @if (Route::has('register'))
-                    <a href="{{ route('register') }}" class="text-blue-600 bg-blue-100 hover:bg-blue-200 px-4 py-2 rounded-md transition">Register</a>
-                    @endif
-=======
                     </ul>
 
                     <!-- Right Side Of Navbar -->
@@ -74,37 +68,13 @@
                             </li>
                         @endguest
                     </ul>
->>>>>>> ece380b58ea06f68d00e4dabb155a16b90af937c
                 </div>
-                @else
-                <div class="relative">
-                    <button class="flex items-center space-x-2 bg-gray-200 p-2 rounded-md hover:bg-gray-300 transition focus:outline-none" id="dropdownButton" aria-haspopup="true" aria-expanded="false">
-                        <span class="font-medium text-gray-800">{{ Auth::user()->name }}</span>
-                        <i class="fas fa-chevron-down"></i>
-                    </button>
-
-                    <div class="dropdown-menu absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="px-2 py-1">
-                            @csrf
-                            <button type="submit" class="w-full text-left text-gray-800 hover:bg-gray-100 px-2 py-1 rounded-md">
-                                {{ __('Logout') }}
-                            </button>
-                        </form>
-                    </div>
-                </div>
-                @endguest
             </div>
-
-            <!-- Mobile Menu Button -->
-            <button class="md:hidden flex items-center text-gray-800" id="mobileMenuButton">
-                <i class="fas fa-bars"></i>
-            </button>
         </nav>
 
-        <main class="flex-1 overflow-auto">
+        <main class="py-4">
             @yield('content')
         </main>
     </div>
 </body>
-
 </html>
