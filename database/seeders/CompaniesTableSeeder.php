@@ -15,7 +15,7 @@ class CompaniesTableSeeder extends Seeder
     {
         DB::table('companies')->insert([
             [
-                'user_id' => 3, // Sesuaikan dengan ID user yang memiliki role company
+                'user_id' => 10, // Sesuaikan dengan ID user yang memiliki role company
                 'company_name' => 'PT Teknologi Indonesia',
                 'industry' => 'Teknologi',
                 'website' => 'https://teknologi.co.id',

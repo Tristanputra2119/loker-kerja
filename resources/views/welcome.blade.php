@@ -134,7 +134,6 @@
     </section>
 
 
-<<<<<<< HEAD
     <!-- Footer Section -->
     <footer class="bg-[#00B4DB] text-white py-8">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -186,8 +185,3 @@
 </body>
 
 </html>
-=======
-</body>
-
-</html>
->>>>>>> ece380b58ea06f68d00e4dabb155a16b90af937c

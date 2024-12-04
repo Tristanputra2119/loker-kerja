@@ -24,7 +24,7 @@
         <nav class="bg-white shadow-md flex items-center justify-between p-4">
             <!-- Logo -->
             <a href="{{ url('/') }}" class="text-2xl font-bold text-gray-800">
-                {{ config('app.name', 'Laravel') }}
+                {{ config('app.name', 'PCC') }}
             </a>
 
             <!-- Desktop Menu -->
