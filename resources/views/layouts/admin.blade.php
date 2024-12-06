@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
@@ -80,20 +80,7 @@
 
             <!-- Content -->
             <main class="flex-1 p-6 bg-gray-100">
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div class="p-4 bg-white shadow rounded-lg">
-                        <h2 class="text-lg font-semibold text-gray-800">Statistik 1</h2>
-                        <p class="mt-2 text-sm text-gray-600">Detail tentang statistik 1</p>
-                    </div>
-                    <div class="p-4 bg-white shadow rounded-lg">
-                        <h2 class="text-lg font-semibold text-gray-800">Statistik 2</h2>
-                        <p class="mt-2 text-sm text-gray-600">Detail tentang statistik 2</p>
-                    </div>
-                    <div class="p-4 bg-white shadow rounded-lg">
-                        <h2 class="text-lg font-semibold text-gray-800">Statistik 3</h2>
-                        <p class="mt-2 text-sm text-gray-600">Detail tentang statistik 3</p>
-                    </div>
-                </div>
+                @yield('content')
             </main>
         </div>
     </div>

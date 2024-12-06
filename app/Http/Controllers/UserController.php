@@ -22,11 +22,14 @@ class UserController extends Controller
 
     public function store(Request $request)
     {
+
+
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users',
             'password' => 'required|string|min:8',
             'profile_picture' => 'nullable|image|mimes:jpg,png,jpeg,gif|max:2048',
+            'role' => 'required|in:company,user',
         ]);
 
         $profilePicturePath = null;
@@ -35,11 +38,13 @@ class UserController extends Controller
             $profilePicturePath = $request->file('profile_picture')->store('profile_pictures', 'public');
         }
 
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
             'profile_picture' => $profilePicturePath,
+            'role' => $request->role,
         ]);
 
         return redirect()->route('users.index');
