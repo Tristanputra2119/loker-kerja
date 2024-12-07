@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ProfileController;
 
 // Halaman Welcome
 Route::get('/', function () {
@@ -31,3 +32,11 @@ Route::middleware('auth')->group(function () {
 // Resource Controllers for User and Company
 Route::resource('users', UserController::class)->middleware('auth');
 Route::resource('companies', CompanyController::class)->middleware('auth');
+Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
+
+
+// Profile Routes
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+    Route::post('/profile', [ProfileController::class, 'update'])->name('profile.update');
+});

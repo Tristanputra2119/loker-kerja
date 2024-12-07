@@ -71,11 +71,11 @@
                     @auth
                     <!-- Dropdown untuk Profil -->
                     <button @click="open = !open" class="flex items-center focus:outline-none">
-                        <img src="https://via.placeholder.com/40" alt="Profile Picture" class="h-10 w-10 rounded-full">
+                        <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="Profile Picture" class="h-10 w-10 rounded-full">
                     </button>
                     <!-- Dropdown Menu -->
                     <div x-show="open" @click.outside="open = false" class="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
-                        <a href="#" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
+                        <a href="/profile" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
                         <a href="/settings" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Settings</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="block">
                             @csrf

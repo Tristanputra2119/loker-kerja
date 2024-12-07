@@ -5,12 +5,6 @@
     <!-- Gambar Latar Belakang -->
     <div class="absolute inset-0 w-full h-full bg-cover bg-center z-0" style="background-image: url('{{ asset('img/banner.jpg') }}'); filter: blur(10px);"></div>
 
-    <!-- Navigasi Kembali -->
-    <div class="absolute top-0 left-0 m-4 z-10">
-        <a href="{{ url('/') }}" class="px-4 py-2 text-white bg-gray-800 rounded-full hover:bg-gray-700 transition">
-            <i class="fas fa-arrow-left"></i> Kembali
-        </a>
-    </div>
 
     <!-- Form Login -->
     <div class="bg-white bg-opacity-90 p-8 rounded-lg shadow-lg backdrop-blur-sm max-w-md w-full z-10">
