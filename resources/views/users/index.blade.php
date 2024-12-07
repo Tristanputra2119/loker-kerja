@@ -3,44 +3,55 @@
 @section('title', 'User List')
 
 @section('content')
-    <div class="container mx-auto">
-        <h1 class="text-3xl font-bold mb-4">User List</h1>
-        <a href="{{ route('users.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded-md mb-4 inline-block hover:bg-blue-600">Add New User</a>
+<div class="container mx-auto mt-8">
+    <h2 class="text-3xl font-semibold text-gray-800 mb-6">Daftar User</h2>
 
-        <div class="overflow-x-auto bg-white shadow-md rounded-lg">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Name</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Profile Picture</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Actions</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    @foreach ($users as $user)
-                        <tr>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $user->name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">{{ $user->email }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                @if($user->profile_picture)
-                                    <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture" class="w-12 h-12 rounded-full">
-                                @else
-                                    <span class="text-gray-500">No Picture</span>
-                                @endif
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
-                                <a href="{{ route('users.edit', $user->id) }}" class="text-yellow-600 hover:text-yellow-900">Edit</a>
-                                <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline-block ml-4">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="text-red-600 hover:text-red-900" onclick="return confirm('Are you sure you want to delete this user?');">Delete</button>
-                                </form>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+    <!-- Pesan sukses -->
+    @if (session('success'))
+    <div class="bg-green-500 text-white p-3 rounded-lg mb-6">
+        {{ session('success') }}
     </div>
+    @endif
+
+    <div class="mb-4">
+        <a href="{{ route('users.create') }}" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">Tambah User</a>
+    </div>
+
+    <!-- Tabel Daftar User -->
+    <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+        <table class="min-w-full table-auto">
+            <thead class="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+                <tr>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">Nama</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">Email</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">Foto Profil</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">Aksi</th>
+                </tr>
+            </thead>
+            <tbody class="bg-white">
+                @foreach ($users as $user)
+                <tr class="hover:bg-gray-50 transition duration-300">
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $user->name }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $user->email }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">
+                        @if($user->profile_picture)
+                        <img src="{{ asset('storage/' . $user->profile_picture) }}" alt="Profile Picture" class="w-12 h-12 rounded-full">
+                        @else
+                        <span class="text-gray-500">No Picture</span>
+                        @endif
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-200">
+                        <a href="{{ route('users.edit', $user->id) }}" class="text-yellow-500 hover:text-yellow-600">Edit</a> |
+                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-500 hover:text-red-700">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
+</div>
 @endsection

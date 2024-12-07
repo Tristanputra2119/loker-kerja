@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
+use App\Models\Company;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
@@ -15,9 +17,18 @@ class HomeController extends Controller
     {
         $user = Auth::user();
 
+        // Mendapatkan total pengguna
+        $UserTotal = User::count();
+
+        // Mendapatkan total perusahaan
+        $CompanyTotal = Company::count();
+
+        // Mendapatkan 5 pengguna terbaru
+        $Recent = User::orderBy('created_at', 'desc')->take(5)->get();
+
         // Redirect based on role
         if ($user->role === 'admin' || $user->role === 'company') {
-            return view('admin.dashboard', ['message' => "Hello {$user->role}"]);
+            return view('admin.dashboard', compact('UserTotal', 'CompanyTotal', 'Recent'));
         }
 
         // Redirect to home for other roles

@@ -1,49 +1,50 @@
-
 @extends('layouts.admin')
 
 @section('content')
 <div class="container mx-auto mt-8">
-    <h2 class="text-2xl font-semibold mb-4">Daftar Perusahaan</h2>
+    <h2 class="text-3xl font-semibold text-gray-800 mb-6">Daftar Perusahaan</h2>
 
     <!-- Pesan sukses -->
     @if (session('success'))
-        <div class="bg-green-500 text-white p-3 rounded mb-4">
-            {{ session('success') }}
-        </div>
+    <div class="bg-green-500 text-white p-3 rounded-lg mb-6">
+        {{ session('success') }}
+    </div>
     @endif
 
     <div class="mb-4">
-        <a href="{{ route('companies.create') }}" class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600">Tambah Perusahaan</a>
+        <a href="{{ route('companies.create') }}" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">Tambah Perusahaan</a>
     </div>
 
     <!-- Tabel Daftar Perusahaan -->
-    <div class="overflow-x-auto bg-white shadow-md rounded-lg">
+    <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
         <table class="min-w-full table-auto">
-            <thead class="bg-gray-100">
+            <thead class="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
                 <tr>
-                    <th class="px-4 py-2 border-b text-left text-sm font-medium text-gray-600">ID</th>
-                    <th class="px-4 py-2 border-b text-left text-sm font-medium text-gray-600">Nama Perusahaan</th>
-                    <th class="px-4 py-2 border-b text-left text-sm font-medium text-gray-600">Industri</th>
-                    <th class="px-4 py-2 border-b text-left text-sm font-medium text-gray-600">Website</th>
-                    <th class="px-4 py-2 border-b text-left text-sm font-medium text-gray-600">Aksi</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">ID</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">Nama Perusahaan</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">Industri</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">Website</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
+            <tbody class="bg-white">
                 @foreach ($companies as $company)
-                    <tr>
-                        <td class="px-4 py-2 border-b">{{ $company->id }}</td>
-                        <td class="px-4 py-2 border-b">{{ $company->company_name }}</td>
-                        <td class="px-4 py-2 border-b">{{ $company->industry }}</td>
-                        <td class="px-4 py-2 border-b">{{ $company->website }}</td>
-                        <td class="px-4 py-2 border-b">
-                            <a href="{{ route('companies.edit', $company->id) }}" class="text-blue-500 hover:underline">Edit</a> |
-                            <form action="{{ route('companies.destroy', $company->id) }}" method="POST" class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="text-red-500 hover:underline">Hapus</button>
-                            </form>
-                        </td>
-                    </tr>
+                <tr class="hover:bg-gray-50 transition duration-300">
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $company->id }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $company->company_name }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $company->industry }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">
+                        <a href="{{ $company->website }}" class="text-blue-500 hover:text-blue-700" target="_blank">{{ $company->website }}</a>
+                    </td>
+                    <td class="px-6 py-4 border-b border-gray-200">
+                        <a href="{{ route('companies.edit', $company->id) }}" class="text-yellow-500 hover:text-yellow-600">Edit</a> |
+                        <form action="{{ route('companies.destroy', $company->id) }}" method="POST" class="inline">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="text-red-500 hover:text-red-700">Hapus</button>
+                        </form>
+                    </td>
+                </tr>
                 @endforeach
             </tbody>
         </table>
