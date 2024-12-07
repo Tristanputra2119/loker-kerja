@@ -11,15 +11,23 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-// Auth Routes
+// Auth Routes (Login, Register, Reset Password, etc.)
 Auth::routes();
 
-// Dashboard Route for Admin and Company
-Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard')->middleware('auth');
-
-// Home Route for General Users
+// General Home Route (Accessible by all authenticated users)
 Route::get('/home', [HomeController::class, 'home'])->name('home')->middleware('auth');
 
-// Resource Controllers
-Route::resource('users', UserController::class);
-Route::resource('companies', CompanyController::class);
+// Dashboard Routes with Role-based Access
+Route::middleware('auth')->group(function () {
+    Route::get('/admin/dashboard', function () {
+        return view('admin.dashboard');
+    })->name('admin.dashboard')->middleware('checkrole:admin');
+
+    Route::get('/company/dashboard', function () {
+        return view('company.dashboard');
+    })->name('company.dashboard')->middleware('checkrole:company');
+});
+
+// Resource Controllers for User and Company
+Route::resource('users', UserController::class)->middleware('auth');
+Route::resource('companies', CompanyController::class)->middleware('auth');

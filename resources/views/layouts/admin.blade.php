@@ -43,6 +43,14 @@
                         </a>
                     </li>
                     <li>
+                        <a href="/dashboard" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            <svg class="h-6 w-6 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h11M9 21V3m12 18v-7m0 0l-3-3m3 3l3-3" />
+                            </svg>
+                            <span class="ml-3">Company</span>
+                        </a>
+                    </li>
+                    <li>
                         <a href="/settings" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
                             <svg class="h-6 w-6 text-gray-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 11V5a1 1 0 112 0v6m0 2v6a1 1 0 11-2 0v-6m-7 0H5a1 1 0 110-2h6m2 0h6a1 1 0 110 2h-6" />
