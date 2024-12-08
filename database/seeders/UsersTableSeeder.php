@@ -18,7 +18,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Admin Kampus',
                 'email' => 'admin@kampus.ac.id',
-                'password' => Hash::make('admin123'),
+                'password' => Hash::make('admin'),
                 'role' => 'admin',
                 'profile_picture' => null,
                 'address' => 'Jl. Raya Kampus No.1, Denpasar, Bali',
@@ -29,7 +29,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'Budi Santoso',
                 'email' => 'budi@gmail.com',
-                'password' => Hash::make('user123'),
+                'password' => Hash::make('user'),
                 'role' => 'user',
                 'profile_picture' => null,
                 'address' => 'Jl. Kebon Jeruk No.2, Jakarta',
@@ -40,7 +40,7 @@ class UsersTableSeeder extends Seeder
             [
                 'name' => 'PT Teknologi Indonesia',
                 'email' => 'contact@teknologi.co.id',
-                'password' => Hash::make('company123'),
+                'password' => Hash::make('company'),
                 'role' => 'company',
                 'profile_picture' => null,
                 'address' => 'Jl. Gatot Subroto No.3, Surabaya',

@@ -29,28 +29,38 @@
                 <ul class="space-y-2">
                     <li>
                         <a href="/dashboard" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
-                            <i class="fas fa-tachometer-alt text-gray-500"></i> <!-- Ikon Dashboard -->
+                            <i class="fas fa-tachometer-alt text-gray-500"></i>
                             <span class="ml-3">Dashboard</span>
                         </a>
                     </li>
+
+                    <!-- Users Link: Only for Admin -->
+                    @if(auth()->user()->role === 'admin')
                     <li>
                         <a href="/users" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
-                            <i class="fas fa-users text-gray-500"></i> <!-- Ikon Users -->
+                            <i class="fas fa-users text-gray-500"></i>
                             <span class="ml-3">Users</span>
                         </a>
                     </li>
+                    @endif
+
+                    <!-- Company Link: For Admin and Company Roles -->
+                    @if(auth()->user()->role === 'company' || auth()->user()->role === 'admin')
                     <li>
                         <a href="/companies" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
-                            <i class="fas fa-building text-gray-500"></i> <!-- Ikon Company -->
+                            <i class="fas fa-building text-gray-500"></i>
                             <span class="ml-3">Company</span>
                         </a>
                     </li>
+                    @endif
+
+                    <!-- Notifications Link: Only for Admin -->
+                    @if(auth()->user()->role === 'admin')
                     <li>
                         <a href="/notifications" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 relative">
                             <i class="fas fa-bell text-gray-500"></i>
                             <span class="ml-3">Notifications</span>
 
-                            <!-- Tampilkan tanda indikator jika ada notifikasi pending -->
                             @if(isset($pendingNotifications) && $pendingNotifications->count() > 0)
                             <span class="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-white bg-red-500 rounded-full">
                                 {{ $pendingNotifications->count() }}
@@ -58,6 +68,7 @@
                             @endif
                         </a>
                     </li>
+                    @endif
                 </ul>
             </nav>
         </aside>
@@ -69,14 +80,14 @@
                 <h1 class="text-xl font-semibold text-gray-800">Admin Dashboard</h1>
                 <div x-data="{ open: false }" class="relative">
                     @auth
-                    <!-- Dropdown untuk Profil -->
+                    <!-- Dropdown for Profile -->
                     <button @click="open = !open" class="flex items-center focus:outline-none">
                         <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="Profile Picture" class="h-10 w-10 rounded-full">
                     </button>
                     <!-- Dropdown Menu -->
                     <div x-show="open" @click.outside="open = false" class="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
                         <a href="/profile" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
-                        <a href="/notifications" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">notification</a>
+                        <a href="/notifications" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Notifications</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="block">
                             @csrf
                             <button type="submit" class="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</button>
