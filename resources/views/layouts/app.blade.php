@@ -1,5 +1,5 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<!doctype html>
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="h-full">
 
 <head>
     <meta charset="utf-8">
@@ -8,69 +8,103 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel Admin') }}</title>
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <!-- Tailwind CSS -->
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <!-- Fonts -->
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-    <!-- Alpine.js -->
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <!-- Scripts -->
+    @vite(['resources/sass/app.scss', 'resources/js/app.js'])
 </head>
 
-<body class="bg-gray-100 min-h-screen flex">
-    <div id="app" class="flex flex-1 min-h-screen">
-        <!-- Sidebar -->
-        <aside class="w-64 bg-white shadow-lg min-h-screen">
-            <div class="h-16 flex items-center justify-center border-b border-gray-200">
-                <span class="text-lg font-bold text-gray-800">{{ config('app.name', 'Admin') }}</span>
-            </div>
-            <nav class="mt-4">
-                <ul class="space-y-2">
-                    <li>
+<body class="h-full bg-gray-100">
+    <div id="app" class="h-full flex flex-col">
+        <!-- Navbar -->
+        <nav class="bg-white shadow-md flex items-center justify-between p-4">
+            <!-- Logo -->
+            <a href="{{ url('/') }}" class="text-2xl font-bold text-gray-800">
+                {{ config('app.name', 'PCC') }}
+            </a>
 
-                            <!-- Tampilkan tanda indikator jika ada notifikasi pending -->
-                            @if(isset($pendingNotifications) && $pendingNotifications->count() > 0)
-                            <span class="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-white bg-red-500 rounded-full">
-                                {{ $pendingNotifications->count() }}
-                            </span>
-                            @endif
-                        </a>
-                    </li>
-                </ul>
-            </nav>
-        </aside>
-
-        <!-- Main Content -->
-        <div class="flex-1 min-h-screen flex flex-col">
-            <!-- Header -->
-            <header class="h-16 bg-white shadow flex items-center justify-between px-6">
-                <h1 class="text-xl font-semibold text-gray-800">Admin Dashboard</h1>
-                <div x-data="{ open: false }" class="relative">
-                    @auth
-                    <!-- Dropdown untuk Profil -->
-                    <button @click="open = !open" class="flex items-center focus:outline-none">
-                        <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="Profile Picture" class="h-10 w-10 rounded-full">
+            <!-- Desktop Menu -->
+            <div class="hidden md:flex items-center space-x-4">
+                @guest
+                @if (Route::has('login'))
+                <a href="{{ route('login') }}" class="text-blue-600 hover:bg-blue-100 px-4 py-2 rounded-md transition">
+                    Login
+                </a>
+                @endif
+                @if (Route::has('register'))
+                <a href="{{ route('register') }}" class="text-blue-600 bg-blue-100 hover:bg-blue-200 px-4 py-2 rounded-md transition">
+                    Register
+                </a>
+                @endif
+                @else
+                <div class="relative">
+                    <button class="flex items-center space-x-2 bg-gray-200 p-2 rounded-md hover:bg-gray-300 transition focus:outline-none" id="dropdownButton">
+                        <span class="font-medium text-gray-800">{{ Auth::user()->name }}</span>
+                        <i class="fas fa-chevron-down"></i>
                     </button>
-                    <!-- Dropdown Menu -->
-                    <div x-show="open" @click.outside="open = false" class="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
-                        <a href="/profile" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
-                        <a href="/notifications" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">notification</a>
-                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="block">
+                    <div class="hidden absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg dropdown-menu">
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST">
                             @csrf
-                            <button type="submit" class="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</button>
+                            <button type="submit" class="w-full text-left text-gray-800 hover:bg-gray-100 px-4 py-2 rounded-md">
+                                {{ __('Logout') }}
+                            </button>
                         </form>
                     </div>
-                    @endauth
                 </div>
-            </header>
+                @endguest
+            </div>
 
-            <!-- Content -->
-            <main class="flex-1 overflow-auto p-6 bg-gray-100">
-                @yield('content')
-            </main>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden flex items-center text-gray-800 focus:outline-none" id="mobileMenuButton">
+                <i class="fas fa-bars"></i>
+            </button>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div class="md:hidden hidden bg-white shadow-md p-4" id="mobileMenu">
+            @guest
+            @if (Route::has('login'))
+            <a href="{{ route('login') }}" class="block text-blue-600 hover:bg-blue-100 px-4 py-2 rounded-md transition">
+                Login
+            </a>
+            @endif
+            @if (Route::has('register'))
+            <a href="{{ route('register') }}" class="block text-blue-600 bg-blue-100 hover:bg-blue-200 px-4 py-2 rounded-md transition">
+                Register
+            </a>
+            @endif
+            @else
+            <form id="logout-form-mobile" action="{{ route('logout') }}" method="POST">
+                @csrf
+                <button type="submit" class="w-full text-left text-gray-800 hover:bg-gray-100 px-4 py-2 rounded-md">
+                    {{ __('Logout') }}
+                </button>
+            </form>
+            @endguest
         </div>
+
+        <!-- Main Content -->
+        <main class="flex-1 overflow-auto">
+            @yield('content')
+        </main>
     </div>
+
+    <!-- Dropdown Toggle Script -->
+    <script>
+        document.getElementById('dropdownButton')?.addEventListener('click', function() {
+            const menu = document.querySelector('.dropdown-menu');
+            menu?.classList.toggle('hidden');
+        });
+
+        document.getElementById('mobileMenuButton')?.addEventListener('click', function() {
+            const menu = document.getElementById('mobileMenu');
+            menu?.classList.toggle('hidden');
+        });
+    </script>
 </body>
 
 </html>
