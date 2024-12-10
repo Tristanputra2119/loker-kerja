@@ -8,12 +8,22 @@ class Jobs extends Model
 {
     protected $fillable = [
         'company_id',
-        'job_title',
-        'job_description',
+        'title',
+        'description',
         'requirements',
         'salary',
         'location',
         'category',
     ];
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(JobCategory::class, 'job_category_id');
+    }
+
 
 }

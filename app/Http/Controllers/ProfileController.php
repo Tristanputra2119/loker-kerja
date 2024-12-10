@@ -11,7 +11,7 @@ class ProfileController extends Controller
     public function show()
     {
         $user = Auth::user();
-        return view('profile.show', compact('user'));
+        return view('admin.profile.show', compact('user'));
     }
 
     public function update(Request $request)
@@ -44,6 +44,6 @@ class ProfileController extends Controller
 
         $user->save();
 
-        return redirect()->route('profile.show')->with('success', 'Profile updated successfully');
+        return redirect()->route('admin.profile.show')->with('success', 'Profile updated successfully');
     }
 }

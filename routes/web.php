@@ -2,12 +2,13 @@
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\JobsController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\NotificationController;
-use App\Http\Controllers\AdminController;
 
 // Halaman Welcome
 Route::get('/', function () {
@@ -44,3 +45,5 @@ Route::middleware('auth')->group(function () {
     Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
     Route::put('notifications/{id}', [NotificationController::class, 'update'])->name('notifications.update');
 });
+
+Route::resource('jobs', JobsController::class)->middleware('auth');

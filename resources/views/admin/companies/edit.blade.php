@@ -74,6 +74,12 @@
             <textarea name="address" id="address" class="mt-2 p-3 border border-gray-300 rounded-md w-full" rows="4">{{ old('address', $company->address) }}</textarea>
         </div>
 
+        <!-- Phone Number -->
+        <div class="mb-6">
+            <label for="phone" class="block text-sm font-medium text-gray-700">Phone Number</label>
+            <input type="text" name="phone" id="phone" class="mt-2 p-3 border border-gray-300 rounded-md w-full" value="{{ old('phone', $company->phone) }}" required>
+        </div>
+
         <!-- Submit Button -->
         <div class="mb-4">
             <button type="submit" class="px-6 py-3 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-all duration-200">Update Company</button>

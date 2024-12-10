@@ -12,7 +12,7 @@ class CompanyController extends Controller
     public function index()
     {
         $companies = Company::all();
-        return view('companies.index', compact('companies'));
+        return view('admin.companies.index', compact('companies'));
     }
 
     // Menampilkan form untuk membuat perusahaan baru
@@ -20,7 +20,7 @@ class CompanyController extends Controller
     {
         // Menampilkan semua user dengan role 'company'
         $users = User::where('role', 'company')->get();
-        return view('companies.create', compact('users'));
+        return view('admin.companies.create', compact('users'));
     }
 
     // Menyimpan perusahaan baru
@@ -55,7 +55,7 @@ class CompanyController extends Controller
 
         $company->save();
 
-        return redirect()->route('companies.index')->with('success', 'Perusahaan berhasil ditambahkan!');
+        return redirect()->route('admin.companies.index')->with('success', 'Perusahaan berhasil ditambahkan!');
     }
 
     // Menampilkan form untuk mengedit perusahaan
@@ -64,7 +64,7 @@ class CompanyController extends Controller
         // Menampilkan semua user dengan role 'company' dan data perusahaan untuk diedit
         $users = User::where('role', 'company')->get();
         $company = Company::findOrFail($id);
-        return view('companies.edit', compact('company', 'users'));
+        return view('admin.companies.edit', compact('company', 'users'));
     }
 
     // Menyimpan perubahan perusahaan
@@ -104,7 +104,7 @@ class CompanyController extends Controller
 
         $company->save();
 
-        return redirect()->route('companies.index')->with('success', 'Perusahaan berhasil diperbarui!');
+        return redirect()->route('admin.companies.index')->with('success', 'Perusahaan berhasil diperbarui!');
     }
 
     // Menghapus perusahaan
@@ -117,6 +117,6 @@ class CompanyController extends Controller
         }
         $company->delete();
 
-        return redirect()->route('companies.index')->with('success', 'Perusahaan berhasil dihapus!');
+        return redirect()->route('admin.companies.index')->with('success', 'Perusahaan berhasil dihapus!');
     }
 }
