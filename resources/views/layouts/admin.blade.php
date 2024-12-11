@@ -55,7 +55,7 @@
                     @endif
 
 
-                    @if(auth()->user()->role === 'company' || auth()->user()->role === 'admin')
+                    @if(auth()->user()->role === 'company')
                     <li>
                         <a href="/jobs" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
                             <i class="fas fa-building text-gray-500"></i>
@@ -64,6 +64,23 @@
                     </li>
                     @endif
 
+                    @if(auth()->user()->role === 'company')
+                    <li>
+                        <a href="/job_categories" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            <i class="fas fa-building text-gray-500"></i>
+                            <span class="ml-3">Job_category</span>
+                        </a>
+                    </li>
+                    @endif
+
+                    @if(auth()->user()->role === 'company')
+                    <li>
+                        <a href="/job_categories" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                            <i class="fas fa-building text-gray-500"></i>
+                            <span class="ml-3">Applications</span>
+                        </a>
+                    </li>
+                    @endif
 
                     <!-- Notifications Link: Only for Admin -->
                     @if(auth()->user()->role === 'admin')

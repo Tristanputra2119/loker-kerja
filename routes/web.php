@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\JobCategoryController;
 use App\Http\Controllers\NotificationController;
 
 // Halaman Welcome
@@ -47,3 +49,5 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::resource('jobs', JobsController::class)->middleware('auth');
+Route::resource('job_categories', JobCategoryController::class)->middleware('auth');
+Route::resource('applications', ApplicationController::class)->middleware('auth');

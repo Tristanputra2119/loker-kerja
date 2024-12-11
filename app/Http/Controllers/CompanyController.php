@@ -55,7 +55,7 @@ class CompanyController extends Controller
 
         $company->save();
 
-        return redirect()->route('admin.companies.index')->with('success', 'Perusahaan berhasil ditambahkan!');
+        return redirect()->route('companies.index')->with('success', 'Perusahaan berhasil ditambahkan!');
     }
 
     // Menampilkan form untuk mengedit perusahaan
@@ -104,7 +104,7 @@ class CompanyController extends Controller
 
         $company->save();
 
-        return redirect()->route('admin.companies.index')->with('success', 'Perusahaan berhasil diperbarui!');
+        return redirect()->route('companies.index')->with('success', 'Perusahaan berhasil diperbarui!');
     }
 
     // Menghapus perusahaan
@@ -117,6 +117,6 @@ class CompanyController extends Controller
         }
         $company->delete();
 
-        return redirect()->route('admin.companies.index')->with('success', 'Perusahaan berhasil dihapus!');
+        return redirect()->route('companies.index')->with('success', 'Perusahaan berhasil dihapus!');
     }
 }

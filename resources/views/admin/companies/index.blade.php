@@ -11,10 +11,11 @@
     </div>
     @endif
 
+    @if(auth()->user()->role === 'admin')
     <div class="mb-4">
         <a href="{{ route('companies.create') }}" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">Tambah Perusahaan</a>
     </div>
-
+    @endif
     <!-- Tabel Daftar Perusahaan -->
     <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
         <table class="min-w-full table-auto">
@@ -38,11 +39,13 @@
                     </td>
                     <td class="px-6 py-4 border-b border-gray-200">
                         <a href="{{ route('companies.edit', $company->id) }}" class="text-yellow-500 hover:text-yellow-600">Edit</a> |
+                        @if(auth()->user()->role === 'admin')
                         <form action="{{ route('companies.destroy', $company->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-500 hover:text-red-700">Hapus</button>
                         </form>
+                        @endif
                     </td>
                 </tr>
                 @endforeach

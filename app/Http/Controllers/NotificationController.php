@@ -30,7 +30,7 @@ class NotificationController extends Controller
             $notification->save();
         }
 
-        return redirect()->route('admin.notifications.index');
+        return redirect()->route('notifications.index');
     }
 }
 

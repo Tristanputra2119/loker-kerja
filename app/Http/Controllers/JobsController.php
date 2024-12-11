@@ -26,6 +26,7 @@ class JobsController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -38,11 +39,11 @@ class JobsController extends Controller
         Jobs::create([
             'title'=> $request->title,
             'company_id' => Auth::user()->company->id,
-            'job_category_id' => $request->job_category_id,
             'description' => $request->description,
             'requirements' => $request->requirements,
             'salary' => $request->salary,
             'location' => $request->location,
+            'job_category_id' => $request->job_category_id,
         ]);
 
         return redirect()->route('jobs.index')->with('success', 'Job created successfully.');
@@ -58,6 +59,7 @@ class JobsController extends Controller
 
     public function update(Request $request, Jobs $job)
     {
+
         $this->authorizeJob($job);
 
         $request->validate([

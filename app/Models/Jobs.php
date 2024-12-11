@@ -13,7 +13,7 @@ class Jobs extends Model
         'requirements',
         'salary',
         'location',
-        'category',
+        'job_category_id',
     ];
     public function company()
     {
