@@ -2,17 +2,26 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Company;
 use App\Models\User;
+use App\Models\Company;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class CompanyController extends Controller
 {
     // Menampilkan daftar perusahaan
     public function index()
     {
-        $companies = Company::all();
+       // Pastikan pengguna memiliki peran 'company'
+    if (Auth::user()->role === 'company') {
+        // Ambil data perusahaan yang terkait pengguna dan limit 1
+        $companies = Company::where('user_id', Auth::id())->first();
+
         return view('admin.companies.index', compact('companies'));
+    } else {
+        // Jika bukan role 'company', batasi akses
+        abort(403, 'Unauthorized action.');
+    }
     }
 
     // Menampilkan form untuk membuat perusahaan baru

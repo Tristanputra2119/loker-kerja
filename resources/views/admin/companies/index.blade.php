@@ -29,18 +29,19 @@
                 </tr>
             </thead>
             <tbody class="bg-white">
-                @foreach ($companies as $company)
+                @if ($companies)
                 <tr class="hover:bg-gray-50 transition duration-300">
-                    <td class="px-6 py-4 border-b border-gray-200">{{ $company->id }}</td>
-                    <td class="px-6 py-4 border-b border-gray-200">{{ $company->company_name }}</td>
-                    <td class="px-6 py-4 border-b border-gray-200">{{ $company->industry }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $companies->id }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $companies->company_name }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $companies->industry }}</td>
                     <td class="px-6 py-4 border-b border-gray-200">
-                        <a href="{{ $company->website }}" class="text-blue-500 hover:text-blue-700" target="_blank">{{ $company->website }}</a>
+                        <a href="{{ $companies->website }}" class="text-blue-500 hover:text-blue-700" target="_blank">{{ $companies->website }}</a>
                     </td>
                     <td class="px-6 py-4 border-b border-gray-200">
-                        <a href="{{ route('companies.edit', $company->id) }}" class="text-yellow-500 hover:text-yellow-600">Edit</a> |
+                        <a href="{{ route('companies.edit', $companies->id) }}" class="text-yellow-500 hover:text-yellow-600">Edit</a>
                         @if(auth()->user()->role === 'admin')
-                        <form action="{{ route('companies.destroy', $company->id) }}" method="POST" class="inline">
+                        |
+                        <form action="{{ route('companies.destroy', $companies->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="text-red-500 hover:text-red-700">Hapus</button>
@@ -48,7 +49,12 @@
                         @endif
                     </td>
                 </tr>
-                @endforeach
+            @else
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-gray-500">No company found.</td>
+                </tr>
+            @endif
+
             </tbody>
         </table>
     </div>
