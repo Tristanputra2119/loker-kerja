@@ -20,6 +20,7 @@ return new class extends Migration
             $table->text('requirements')->nullable(); // Persyaratan pekerjaan
             $table->string('salary')->nullable(); // Gaji pekerjaan
             $table->string('location')->nullable(); // Lokasi pekerjaan
+            $table->string('image')->nullable(); // Kolom untuk menyimpan gambar pekerjaan
             $table->timestamps();
         });
     }

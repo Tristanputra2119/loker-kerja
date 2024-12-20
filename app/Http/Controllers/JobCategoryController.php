@@ -13,7 +13,7 @@ class JobCategoryController extends Controller
         // Fetch all categories, or filter them if necessary
         $categories = JobCategory::all();
 
-        return view('admin.categories.index', compact('categories'));
+        return view('user.job.jobSearch', compact('categories'));
     }
 
     public function create()
@@ -61,5 +61,13 @@ class JobCategoryController extends Controller
         $jobCategory->delete();
 
         return redirect()->route('job_categories.index')->with('success', 'Category deleted successfully.');
+    }
+
+    public function showCategories()
+    {
+        $categories = JobCategory::all();
+
+        // Kirim kategori ke tampilan
+        return view('home', compact('categories'));
     }
 }

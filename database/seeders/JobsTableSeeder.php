@@ -15,7 +15,7 @@ class JobsTableSeeder extends Seeder
     {
         DB::table('jobs')->insert([
             [
-                'company_id' => 1, // Sesuaikan dengan ID perusahaan
+                'company_id' => 2, // Sesuaikan dengan ID perusahaan
                 'job_category_id' => 1, // IT & Software
                 'title' => 'Frontend Developer',
                 'description' => 'Bertanggung jawab untuk pengembangan antarmuka pengguna website.',
@@ -26,7 +26,7 @@ class JobsTableSeeder extends Seeder
                 'updated_at' => now(),
             ],
             [
-                'company_id' => 1,
+                'company_id' => 2,
                 'job_category_id' => 2, // Marketing
                 'title' => 'Digital Marketing Specialist',
                 'description' => 'Meningkatkan visibilitas produk di platform digital.',
