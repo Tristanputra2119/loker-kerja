@@ -1,49 +1,57 @@
 @extends('layouts.admin')
 
 @section('content')
-<div class="container mx-auto mt-10">
-    <h1 class="text-2xl font-bold mb-6">Jobs Management</h1>
+<div class="container mx-auto mt-8">
+    <h2 class="text-3xl font-semibold text-gray-800 mb-6">Manajemen Lowongan Pekerjaan</h2>
 
-    @if(session('success'))
-    <div class="bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded mb-6">
+    <!-- Pesan sukses -->
+    @if (session('success'))
+    <div class="bg-green-500 text-white p-3 rounded-lg mb-6">
         {{ session('success') }}
     </div>
     @endif
 
-    <div class="mb-6">
-        <a href="{{ route('jobs.create') }}" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Create New Job
+    <!-- Tombol Tambah Lowongan (Hanya Admin atau Perusahaan) -->
+    <div class="mb-4">
+        <a href="{{ route('jobs.create') }}" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">
+            Tambah Lowongan
         </a>
     </div>
 
-    <div class="overflow-x-auto">
-        <table class="table-auto w-full border-collapse border border-gray-200">
-            <thead>
-                <tr class="bg-gray-100">
-                    <th class="border px-4 py-2">#</th>
-                    <th class="border px-4 py-2">Title</th>
-                    <th class="border px-4 py-2">Category</th>
-                    <th class="border px-4 py-2">Location</th>
-                    <th class="border px-4 py-2">Actions</th>
+    <!-- Tabel Daftar Lowongan -->
+    <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
+        <table class="min-w-full table-auto">
+            <thead class="bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+                <tr>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">#</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">Judul</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">Kategori</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">Lokasi</th>
+                    <th class="px-6 py-3 text-left text-sm font-semibold tracking-wider">Aksi</th>
                 </tr>
             </thead>
-            <tbody>
-                @foreach($jobs as $job)
-                <tr class="hover:bg-gray-50">
-                    <td class="border px-4 py-2">{{ $loop->iteration }}</td>
-                    <td class="border px-4 py-2">{{ $job->title }}</td>
-                    <td class="border px-4 py-2">{{ $job->category->name ?? 'N/A' }}</td>
-                    <td class="border px-4 py-2">{{ $job->location ?? 'N/A' }}</td>
-                    <td class="border px-4 py-2">
-                        <a href="{{ route('jobs.edit', $job) }}" class="text-blue-500 hover:underline">Edit</a> |
-                        <form action="{{ route('jobs.destroy', $job) }}" method="POST" class="inline">
+            <tbody class="bg-white">
+                @forelse ($jobs as $job)
+                <tr class="hover:bg-gray-50 transition duration-300">
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $loop->iteration }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $job->title }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $job->category->name ?? 'N/A' }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $job->location ?? 'N/A' }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">
+                        <a href="{{ route('jobs.edit', $job->id) }}" class="text-yellow-500 hover:text-yellow-600">Edit</a>
+                        |
+                        <form action="{{ route('jobs.destroy', $job->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-red-500 hover:underline" onclick="return confirm('Are you sure?')">Delete</button>
+                            <button type="submit" class="text-red-500 hover:text-red-700" onclick="return confirm('Apakah Anda yakin ingin menghapus lowongan ini?')">Hapus</button>
                         </form>
                     </td>
                 </tr>
-                @endforeach
+                @empty
+                <tr>
+                    <td colspan="5" class="text-center py-4 text-gray-500">Tidak ada lowongan pekerjaan tersedia.</td>
+                </tr>
+                @endforelse
             </tbody>
         </table>
     </div>

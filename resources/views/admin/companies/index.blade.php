@@ -16,6 +16,7 @@
         <a href="{{ route('companies.create') }}" class="bg-blue-500 text-white px-6 py-3 rounded-lg shadow-md hover:bg-blue-600 transition duration-300">Tambah Perusahaan</a>
     </div>
     @endif
+
     <!-- Tabel Daftar Perusahaan -->
     <div class="overflow-x-auto bg-white shadow-lg rounded-lg">
         <table class="min-w-full table-auto">
@@ -29,32 +30,37 @@
                 </tr>
             </thead>
             <tbody class="bg-white">
-                @if ($companies)
+                @forelse ($companies as $company)
                 <tr class="hover:bg-gray-50 transition duration-300">
-                    <td class="px-6 py-4 border-b border-gray-200">{{ $companies->id }}</td>
-                    <td class="px-6 py-4 border-b border-gray-200">{{ $companies->company_name }}</td>
-                    <td class="px-6 py-4 border-b border-gray-200">{{ $companies->industry }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $company->id }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $company->company_name }}</td>
+                    <td class="px-6 py-4 border-b border-gray-200">{{ $company->industry }}</td>
                     <td class="px-6 py-4 border-b border-gray-200">
-                        <a href="{{ $companies->website }}" class="text-blue-500 hover:text-blue-700" target="_blank">{{ $companies->website }}</a>
+                        @if ($company->website)
+                        <a href="{{ $company->website }}" class="text-blue-500 hover:text-blue-700" target="_blank">
+                            {{ $company->website }}
+                        </a>
+                        @else
+                        <span class="text-gray-500">N/A</span>
+                        @endif
                     </td>
                     <td class="px-6 py-4 border-b border-gray-200">
-                        <a href="{{ route('companies.edit', $companies->id) }}" class="text-yellow-500 hover:text-yellow-600">Edit</a>
+                        <a href="{{ route('companies.edit', $company->id) }}" class="text-yellow-500 hover:text-yellow-600">Edit</a>
                         @if(auth()->user()->role === 'admin')
                         |
-                        <form action="{{ route('companies.destroy', $companies->id) }}" method="POST" class="inline">
+                        <form action="{{ route('companies.destroy', $company->id) }}" method="POST" class="inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="text-red-500 hover:text-red-700">Hapus</button>
+                            <button type="submit" class="text-red-500 hover:text-red-700" onclick="return confirm('Apakah Anda yakin ingin menghapus perusahaan ini?')">Hapus</button>
                         </form>
                         @endif
                     </td>
                 </tr>
-            @else
+                @empty
                 <tr>
                     <td colspan="5" class="text-center py-4 text-gray-500">No company found.</td>
                 </tr>
-            @endif
-
+                @endforelse
             </tbody>
         </table>
     </div>

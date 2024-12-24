@@ -34,7 +34,7 @@
 
             <div class="mb-4">
                 <label for="salary" class="block text-gray-700 font-bold mb-2">Salary</label>
-                <input type="text" id="salary" name="salary" value="{{ old('salary') }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                <input type="number" id="salary" name="salary" value="{{ old('salary') }}" class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
                 @error('salary')
                 <p class="text-red-500 text-xs italic">{{ $message }}</p>
                 @enderror

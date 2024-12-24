@@ -12,16 +12,29 @@ class CompanyController extends Controller
     // Menampilkan daftar perusahaan
     public function index()
     {
-       // Pastikan pengguna memiliki peran 'company'
-    if (Auth::user()->role === 'company') {
-        // Ambil data perusahaan yang terkait pengguna dan limit 1
-        $companies = Company::where('user_id', Auth::id())->first();
+    // Inisialisasi pengguna dari Auth facade
+    $user = Auth::user();
 
-        return view('admin.companies.index', compact('companies'));
+    if ($user->role === 'admin') {
+        // Admin: Mengambil semua data perusahaan
+        $companies = Company::all();
+    } elseif ($user->role === 'company') {
+        // Company: Mengambil satu data perusahaan terkait pengguna yang login
+        $companies = Company::where('user_id', $user->id)->first();
+
+        // Jika tidak ditemukan, abort dengan pesan error
+        if (!$companies) {
+            abort(404, 'Perusahaan tidak ditemukan.');
+        }
+
+        // Bungkus dalam koleksi agar Blade tetap kompatibel
+        $companies = collect([$companies]);
     } else {
-        // Jika bukan role 'company', batasi akses
+        // Role lainnya tidak diizinkan
         abort(403, 'Unauthorized action.');
     }
+
+    return view('admin.companies.index', compact('companies'));
     }
 
     // Menampilkan form untuk membuat perusahaan baru

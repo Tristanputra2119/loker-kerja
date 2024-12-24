@@ -23,7 +23,7 @@
         <!-- Sidebar -->
         <aside class="w-64 bg-white shadow-lg min-h-screen">
             <div class="h-16 flex items-center justify-center border-b border-gray-200">
-                <span class="text-lg font-bold text-gray-800">{{ config('app.name', 'Admin') }}</span>
+                <span class="text-lg font-bold text-gray-800">{{ config('app.name') }}</span>
             </div>
             <nav class="mt-4">
                 <ul class="space-y-2">
@@ -57,7 +57,7 @@
 
                     @if(auth()->user()->role === 'company')
                     <li>
-                        <a href="/jobs" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        <a href="/company/jobs" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
                             <i class="fas fa-building text-gray-500"></i>
                             <span class="ml-3">Jobs</span>
                         </a>
@@ -66,7 +66,7 @@
 
                     @if(auth()->user()->role === 'company')
                     <li>
-                        <a href="/job_categories" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        <a href="/company/job_categories" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
                             <i class="fas fa-building text-gray-500"></i>
                             <span class="ml-3">Job_category</span>
                         </a>
@@ -75,7 +75,7 @@
 
                     @if(auth()->user()->role === 'company')
                     <li>
-                        <a href="/job_categories" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        <a href="/company/applications" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
                             <i class="fas fa-building text-gray-500"></i>
                             <span class="ml-3">Applications</span>
                         </a>
@@ -105,7 +105,11 @@
         <div class="flex-1 min-h-screen flex flex-col">
             <!-- Header -->
             <header class="h-16 bg-white shadow flex items-center justify-between px-6">
+                @if(auth()->user()->role === 'admin')
                 <h1 class="text-xl font-semibold text-gray-800">Admin Dashboard</h1>
+                @elseif(auth()->user()->role === 'company')
+                <h1 class="text-xl font-semibold text-gray-800">Company Dashboard</h1>
+                @endif
                 <div x-data="{ open: false }" class="relative">
                     @auth
                     <!-- Dropdown for Profile -->

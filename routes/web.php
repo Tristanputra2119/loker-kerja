@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CompanyJob;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -66,6 +67,7 @@ Route::resource('jobs', JobsController::class)->middleware('auth');
 Route::resource('job_categories', JobCategoryController::class)->middleware('auth');
 Route::resource('applications', ApplicationController::class)->middleware('auth');
 
+Route::resource('/company/jobs', CompanyJob::class)->middleware('auth');
 
 
 Route::middleware(['auth'])->group(function () {
