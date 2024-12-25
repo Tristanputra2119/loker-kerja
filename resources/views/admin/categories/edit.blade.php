@@ -4,7 +4,7 @@
 <div class="max-w-4xl mx-auto py-4">
     <h1 class="text-2xl font-bold mb-4">Edit Category</h1>
 
-    <form action="{{ route('job_categories.update', $jobCategory) }}" method="POST">
+    <form action="{{ route('job_categories.update', $category->id) }}" method="POST"> {{-- Use $category --}}
         @csrf
         @method('PUT')
 
@@ -14,7 +14,7 @@
                 type="text"
                 id="name"
                 name="name"
-                value="{{ old('name', $jobCategory->name) }}"
+                value="{{ old('name', $category->name) }}" {{-- Use $category --}}
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             @error('name')
             <p class="text-red-500 text-xs italic">{{ $message }}</p>
@@ -27,7 +27,7 @@
                 type="text"
                 id="slug"
                 name="slug"
-                value="{{ old('slug', $jobCategory->slug) }}"
+                value="{{ old('slug', $category->slug) }}" {{-- Use $category --}}
                 class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
             @error('slug')
             <p class="text-red-500 text-xs italic">{{ $message }}</p>

@@ -11,6 +11,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProfilUserController;
 use App\Http\Controllers\ApplicationController;
+use App\Http\Controllers\Companyjobcategory;
 use App\Http\Controllers\JobCategoryController;
 use App\Http\Controllers\NotificationController;
 
@@ -67,7 +68,11 @@ Route::resource('jobs', JobsController::class)->middleware('auth');
 Route::resource('job_categories', JobCategoryController::class)->middleware('auth');
 Route::resource('applications', ApplicationController::class)->middleware('auth');
 
+
+//company
 Route::resource('/company/jobs', CompanyJob::class)->middleware('auth');
+Route::resource('/company/job_categories', Companyjobcategory::class);
+
 
 
 Route::middleware(['auth'])->group(function () {

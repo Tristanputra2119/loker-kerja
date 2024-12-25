@@ -60,27 +60,30 @@ class HomeController extends Controller
      */
     private function companyDashboard(User $user)
     {
-        // Mendapatkan perusahaan terkait dengan user yang login
-        $company = $user->company;
+        $user = Auth::user();
+        $company = $user->company; // Mendapatkan data perusahaan yang terkait dengan user login
 
-        // Mengambil total lowongan pekerjaan yang telah diposting
+        if (!$company) {
+            return redirect()->route('home')->with('error', 'You are not associated with a company.');
+        }
+
+        // Mendapatkan total pekerjaan yang dibuat oleh perusahaan
         $totalJobs = $company->jobs()->count();
 
-        // Mengambil total pelamar yang melamar ke pekerjaan perusahaan tersebut
-        $totalApplicants = Application::whereHas('job', function($query) use ($company) {
+        // Mendapatkan total pelamar untuk semua pekerjaan perusahaan
+        $totalApplicants = Application::whereHas('job', function ($query) use ($company) {
             $query->where('company_id', $company->id);
         })->count();
 
-        // Mengambil kategori pekerjaan yang ada
-        $categories = JobCategory::all();
-
         // Mendapatkan 5 pelamar terbaru
-        $recentApplicants = Application::whereHas('job', function($query) use ($company) {
+        $recentApplicants = Application::whereHas('job', function ($query) use ($company) {
             $query->where('company_id', $company->id);
-        })->orderBy('created_at', 'desc')->take(5)->get();
+        })->with(['user', 'job'])->orderBy('created_at', 'desc')->take(5)->get();
 
-        // Kirim data ke tampilan dashboard perusahaan
-        return view('admin.dashboard', compact('totalJobs', 'totalApplicants', 'categories', 'recentApplicants'));
+        // Mendapatkan semua pekerjaan yang dibuat oleh perusahaan
+        $jobs = $company->jobs()->with('category')->get();
+
+        return view('admin.dashboard', compact('totalJobs', 'totalApplicants', 'recentApplicants', 'jobs'));
     }
 
     /**
