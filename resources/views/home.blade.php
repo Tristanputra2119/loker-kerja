@@ -50,7 +50,7 @@
             Cari dan Temukan Pekerjaan <span class="text-blue-600">Impian Anda!</span>
         </h3>
         <div class="mt-8 flex justify-center">
-            <form action="{{ route('job.search') }}" method="GET" class="flex items-center w-full max-w-3xl space-x-2">
+            <form action="{{ route('job.index') }}" method="GET" class="flex items-center w-full max-w-3xl space-x-2">
                 <!-- Input field -->
                 <input
                     type="text"
@@ -61,7 +61,7 @@
                 <button
                     type="submit"
                     class="bg-blue-600 text-white px-6 py-4 rounded-lg hover:bg-blue-700 transition duration-300">
-                    Searh
+                    Cari
                 </button>
             </form>
         </div>
@@ -69,7 +69,7 @@
         <div class="flex justify-center mt-6 flex-wrap gap-4">
             @foreach($categories as $category)
             <a
-                href="{{ route('job.search', ['category' => $category->id]) }}"
+                href="{{ route('job.index', ['category' => $category->id]) }}"
                 class="bg-gray-200 text-gray-700 px-4 py-2 rounded-lg hover:bg-gray-300 transition duration-300">
                 {{ $category->name }}
             </a>
@@ -77,7 +77,6 @@
         </div>
     </div>
 </section>
-
 
 <!-- Testimonials Section -->
 <section class="py-16 bg-gray-100">

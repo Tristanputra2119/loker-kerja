@@ -13,8 +13,7 @@ class JobsController extends Controller
     public function index(Request $request)
     {
         // Ambil data lokasi untuk filter
-        $locations = Jobs::select('location')->distinct()->pluck('location');
-
+        $locations = Jobs::distinct()->pluck('location');
         $query = Jobs::query();
 
         // Filter berdasarkan lokasi
@@ -36,11 +35,25 @@ class JobsController extends Controller
             $query->whereIn('type', $request->waktu);
         }
 
+        // Jika ada pencarian
+        if ($request->has('search') && !empty($request->search)) {
+            $query->where('title', 'like', '%' . $request->search . '%')
+                ->orWhere('description', 'like', '%' . $request->search . '%');
+        }
+
+        // Jika ada kategori yang dipilih
+        if ($request->has('category') && !empty($request->category)) {
+            $query->where('job_category_id', $request->category);
+        }
+
         // Ambil data pekerjaan yang sudah difilter
         $jobs = $query->with(['category', 'company'])->latest()->paginate(10);
 
+        // Ambil semua kategori pekerjaan untuk filter
+        $categories = JobCategory::all();
+
         // Menampilkan data ke view
-        return view('user.job.index', compact('jobs', 'locations'));
+        return view('user.job.index', compact('jobs', 'locations', 'categories'));
     }
 
     public function create()
@@ -139,11 +152,12 @@ class JobsController extends Controller
             })
             ->get();
 
-        return view('user.job.search', compact('jobs', 'categories'));
+        // Menampilkan data ke view
+        return view('user.job.index', compact('jobs', 'categories'));
     }
 
     public function show(Jobs $job)
     {
-        return view('user.job.search', compact('jobs'));
+        return view('user.job.index', compact('jobs'));
     }
 }

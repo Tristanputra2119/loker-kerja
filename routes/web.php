@@ -80,7 +80,5 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/job', [JobsController::class, 'index'])->name('job.index');
 });
 // Job Listings
-Route::get('job/search', [JobsController::class, 'search'])->name('job.search');
+// Route::get('/job', [JobsController::class, 'search'])->name('job.index');
 Route::get('job/{job}', [JobsController::class, 'show'])->name('job.show');
-
-
