@@ -5,7 +5,7 @@
     <div class="flex flex-wrap -mx-4">
         <!-- Sidebar Filter -->
         <div class="w-full lg:w-1/4 px-4">
-            <form method="GET" action="{{ route('jobs.index') }}" class="bg-white shadow-md rounded-lg p-4">
+            <form method="GET" action="{{ route('job.index') }}" class="bg-white shadow-md rounded-lg p-4">
                 <h2 class="text-lg font-semibold mb-4">Filter Pekerjaan</h2>
 
                 <!-- Filter Lokasi -->

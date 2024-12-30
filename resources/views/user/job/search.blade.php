@@ -26,48 +26,75 @@
         <div class="flex flex-wrap -mx-4">
             <!-- Sidebar Filters -->
             <aside class="w-full md:w-1/4 px-4 mb-8 md:mb-0">
-                <div class="bg-white p-4 rounded-lg shadow">
+                <form action="{{ route('jobs.index') }}" method="GET" class="bg-white p-4 rounded-lg shadow">
                     <h3 class="font-bold text-gray-800 mb-4">Filters</h3>
 
-                    <!-- Lokasi Filter -->
-                    <div class="mb-6">
-                        <h4 class="font-semibold text-gray-700 mb-2">Lokasi</h4>
-                        <ul class="space-y-2">
-                            @foreach(['Jawa', 'Bali', 'Sumatra', 'Kalimantan', 'Lokasi Lain'] as $lokasi)
-                            <li>
-                                <input type="radio" id="lokasi-{{ strtolower($lokasi) }}" name="lokasi" value="{{ strtolower($lokasi) }}">
-                                <label for="lokasi-{{ strtolower($lokasi) }}" class="ml-2">{{ $lokasi }}</label>
+                    <div class="sidebar p-4 bg-white rounded shadow">
+                        <!-- Filter Lokasi -->
+                        <h4 class="font-bold text-lg mb-2">Lokasi</h4>
+                        <ul class="mb-4">
+                            @forelse ($locations as $location)
+                            <li class="mb-1">
+                                <a href="{{ route('jobs.index', ['location' => $location]) }}" class="text-blue-600 hover:underline">
+                                    {{ $location }}
+                                </a>
                             </li>
-                            @endforeach
+                            @empty
+                            <li class="text-gray-500">Tidak ada lokasi tersedia.</li>
+                            @endforelse
                         </ul>
-                    </div>
 
-                    <!-- Tanggal Posting Filter -->
-                    <div class="mb-6">
-                        <h4 class="font-semibold text-gray-700 mb-2">Tanggal Posting</h4>
-                        <ul class="space-y-2">
-                            @foreach(['24 jam terakhir', '7 hari terakhir', '1 bulan terakhir'] as $key => $posting)
-                            <li>
-                                <input type="radio" id="posting-{{ $key }}" name="posting" value="{{ strtolower($posting) }}">
-                                <label for="posting-{{ $key }}" class="ml-2">{{ $posting }}</label>
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
 
-                    <!-- Waktu Pekerjaan Filter -->
-                    <div class="mb-6">
-                        <h4 class="font-semibold text-gray-700 mb-2">Waktu Pekerjaan</h4>
-                        <ul class="space-y-2">
-                            @foreach(['Full-time', 'Freelance', 'Part-time'] as $waktu)
-                            <li>
-                                <input type="checkbox" id="waktu-{{ strtolower($waktu) }}" name="waktu" value="{{ strtolower($waktu) }}">
-                                <label for="waktu-{{ strtolower($waktu) }}" class="ml-2">{{ $waktu }}</label>
+                        <!-- Filter Tanggal Posting -->
+                        <h4 class="font-bold text-lg mb-2">Tanggal Posting</h4>
+                        <ul class="mb-4">
+                            <li class="mb-1">
+                                <a href="{{ route('jobs.index', ['posting' => '24']) }}"
+                                    class="text-blue-600 hover:underline">
+                                    24 jam terakhir
+                                </a>
                             </li>
-                            @endforeach
+                            <li class="mb-1">
+                                <a href="{{ route('jobs.index', ['posting' => '7hari']) }}"
+                                    class="text-blue-600 hover:underline">
+                                    7 hari terakhir
+                                </a>
+                            </li>
+                            <li class="mb-1">
+                                <a href="{{ route('jobs.index') }}"
+                                    class="text-blue-600 hover:underline">
+                                    1 bulan terakhir
+                                </a>
+                            </li>
+                        </ul>
+
+                        <!-- Filter Waktu Pekerjaan -->
+                        <h4 class="font-bold text-lg mb-2">Waktu Pekerjaan</h4>
+                        <ul class="mb-4">
+                            <li class="mb-1">
+                                <a href="{{ route('jobs.index', ['waktu' => ['fulltime']]) }}"
+                                    class="text-blue-600 hover:underline">
+                                    Full-time
+                                </a>
+                            </li>
+                            <li class="mb-1">
+                                <a href="{{ route('jobs.index', ['waktu' => ['freelance']]) }}"
+                                    class="text-blue-600 hover:underline">
+                                    Freelance
+                                </a>
+                            </li>
+                            <li class="mb-1">
+                                <a href="{{ route('jobs.index', ['waktu' => ['parttime']]) }}"
+                                    class="text-blue-600 hover:underline">
+                                    Part-time
+                                </a>
+                            </li>
                         </ul>
                     </div>
-                </div>
+                    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded-lg w-full">
+                        Terapkan Filter
+                    </button>
+                </form>
             </aside>
 
             <!-- Job Listings -->

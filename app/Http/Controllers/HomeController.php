@@ -101,7 +101,8 @@ class HomeController extends Controller
             return redirect()->route('dashboard');
         }
 
+        $locations = ['Bali', 'Jakarta', 'Yogyakarta', 'Surabaya']; 
         // Tampilan untuk user biasa
-        return view('home', compact('categories'))->with('message', 'Hello User');
+        return view('home', compact('categories', 'locations'))->with('message', 'Hello User');
     }
 }
