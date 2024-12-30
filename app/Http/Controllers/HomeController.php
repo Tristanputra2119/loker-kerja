@@ -49,7 +49,7 @@ class HomeController extends Controller
         // Mendapatkan 5 pengguna terbaru
         $Recent = User::orderBy('created_at', 'desc')->take(5)->get();
 
-        return view('admin.dashboard', compact('UserTotal', 'CompanyTotal', 'Recent'));
+        return view('admin.dashboard.admin', compact('UserTotal', 'CompanyTotal', 'Recent'));
     }
 
     /**
@@ -83,7 +83,7 @@ class HomeController extends Controller
         // Mendapatkan semua pekerjaan yang dibuat oleh perusahaan
         $jobs = $company->jobs()->with('category')->get();
 
-        return view('admin.dashboard', compact('totalJobs', 'totalApplicants', 'recentApplicants', 'jobs'));
+        return view('admin.dashboard.company', compact('totalJobs', 'totalApplicants', 'recentApplicants', 'jobs'));
     }
 
     /**
@@ -101,7 +101,7 @@ class HomeController extends Controller
             return redirect()->route('dashboard');
         }
 
-        $locations = ['Bali', 'Jakarta', 'Yogyakarta', 'Surabaya']; 
+        $locations = ['Bali', 'Jakarta', 'Yogyakarta', 'Surabaya'];
         // Tampilan untuk user biasa
         return view('home', compact('categories', 'locations'))->with('message', 'Hello User');
     }
