@@ -7,7 +7,7 @@ use App\Models\JobCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class CompanyJob extends Controller
+class CompanyJobs extends Controller
 {
     public function index()
     {
