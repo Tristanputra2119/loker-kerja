@@ -7,6 +7,7 @@ use App\Models\JobCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Log;
+use App\Models\Testimonial;
 
 class JobsController extends Controller
 {
@@ -156,8 +157,30 @@ class JobsController extends Controller
         return view('user.job.index', compact('jobs', 'categories'));
     }
 
-    public function show(Jobs $job)
+    public function show($id)
     {
-        return view('user.job.index', compact('jobs'));
+        $job = Jobs::findOrFail($id);
+        $testimonials = Testimonial::all();
+        $company = $job->company;
+
+        return view('user.job.detail', compact('job', 'company', 'testimonials'));
+    }
+
+
+    // Method untuk melamar pekerjaan
+    public function apply(Request $request, $jobId)
+    {
+        $job = Jobs::findOrFail($jobId);
+        // Validasi data
+        $validated = $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'message' => 'nullable|string',
+        ]);
+
+        // Logika untuk menyimpan lamaran atau mengirim email
+        // Contoh: Simpan ke database atau kirim notifikasi
+
+        return redirect()->route('job.show', $jobId)->with('success', 'Lamaran Anda berhasil dikirim.');
     }
 }

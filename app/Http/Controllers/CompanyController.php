@@ -12,29 +12,29 @@ class CompanyController extends Controller
     // Menampilkan daftar perusahaan
     public function index()
     {
-    // Inisialisasi pengguna dari Auth facade
-    $user = Auth::user();
+        // Inisialisasi pengguna dari Auth facade
+        $user = Auth::user();
 
-    if ($user->role === 'admin') {
-        // Admin: Mengambil semua data perusahaan
-        $companies = Company::all();
-    } elseif ($user->role === 'company') {
-        // Company: Mengambil satu data perusahaan terkait pengguna yang login
-        $companies = Company::where('user_id', $user->id)->first();
+        if ($user->role === 'admin') {
+            // Admin: Mengambil semua data perusahaan
+            $companies = Company::all();
+        } elseif ($user->role === 'company') {
+            // Company: Mengambil satu data perusahaan terkait pengguna yang login
+            $companies = Company::where('user_id', $user->id)->first();
 
-        // Jika tidak ditemukan, abort dengan pesan error
-        if (!$companies) {
-            abort(404, 'Perusahaan tidak ditemukan.');
+            // Jika tidak ditemukan, abort dengan pesan error
+            if (!$companies) {
+                abort(404, 'Perusahaan tidak ditemukan.');
+            }
+
+            // Bungkus dalam koleksi agar Blade tetap kompatibel
+            $companies = collect([$companies]);
+        } else {
+            // Role lainnya tidak diizinkan
+            abort(403, 'Unauthorized action.');
         }
 
-        // Bungkus dalam koleksi agar Blade tetap kompatibel
-        $companies = collect([$companies]);
-    } else {
-        // Role lainnya tidak diizinkan
-        abort(403, 'Unauthorized action.');
-    }
-
-    return view('admin.companies.index', compact('companies'));
+        return view('admin.companies.index', compact('companies'));
     }
 
     // Menampilkan form untuk membuat perusahaan baru
@@ -140,5 +140,13 @@ class CompanyController extends Controller
         $company->delete();
 
         return redirect()->route('companies.index')->with('success', 'Perusahaan berhasil dihapus!');
+    }
+
+    // Menampilkan profil perusahaan
+    public function show($id)
+    {
+        $company = Company::with('jobs')->findOrFail($id);
+
+        return view('user.company.profile', compact('company'));
     }
 }

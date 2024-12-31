@@ -41,6 +41,15 @@ Route::middleware(['auth', 'checkrole:user'])->group(function () {
     })->name('user.landing');
 });
 
+Route::get('/user/about', function () {
+    return view('user.about.index');
+})->name('about');
+
+Route::get('/user/contact', function () {
+    return view('user.contact.index');
+})->name('contact');
+
+
 
 // Resource Controllers for User and Company
 Route::resource('users', UserController::class)->middleware('auth');
@@ -82,3 +91,10 @@ Route::middleware(['auth'])->group(function () {
 // Job Listings
 // Route::get('/job', [JobsController::class, 'search'])->name('job.index');
 Route::get('job/{job}', [JobsController::class, 'show'])->name('job.show');
+
+// Job Applications
+Route::get('/job/{job}/apply', [JobsController::class, 'apply'])->name('user.job.apply');
+
+// Company Profile
+Route::get('/company/{id}', [CompanyController::class, 'show'])->name('company.profile');
+

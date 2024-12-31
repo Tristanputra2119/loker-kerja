@@ -22,8 +22,8 @@
             <nav class="space-x-4">
                 <a href="{{ route('home') }}" class="text-gray-700 hover:text-blue-600">Home</a>
                 <a href="{{ route('job.index') }}" class="text-gray-700 hover:text-blue-600">Jobs</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600">About</a>
-                <a href="#" class="text-gray-700 hover:text-blue-600">Contact</a>
+                <a href="{{ route('about') }}" class="text-gray-700 hover:text-blue-600">About</a>
+                <a href="{{ route('contact') }}" class="text-gray-700 hover:text-blue-600">Contact</a>
             </nav>
 
             <!-- Profile Dropdown (Photo Only) -->

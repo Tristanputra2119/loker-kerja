@@ -82,9 +82,9 @@
                     <p class="text-sm text-gray-600 mb-2">Kategori: {{ $job->category->name }}</p>
                     <p class="text-sm text-gray-600 mb-2">Perusahaan: {{ $job->company->name }}</p>
                     <p class="text-sm text-gray-600">Diposting: {{ $job->created_at->diffForHumans() }}</p>
-                    <a href="{{ route('jobs.show', $job->id) }}"
-                        class="block bg-green-600 text-white px-4 py-2 rounded-lg text-center mt-4">
-                        Lihat Detail
+                    <a href="{{ route('job.show', $job->id) }}"
+                        class="block bg-blue-600 text-white px-4 py-2 rounded-lg text-center mt-4">
+                        Detail Pekerjaan
                     </a>
                 </div>
                 @empty
