@@ -25,5 +25,8 @@ class Jobs extends Model
         return $this->belongsTo(JobCategory::class, 'job_category_id');
     }
 
-
+    public function testimonials()
+    {
+        return $this->hasMany(Testimonial::class, 'job_id', 'id');
+    }
 }

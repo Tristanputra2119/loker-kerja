@@ -31,17 +31,33 @@ class ApplicationController extends Controller
             'status' => 'required|in:Pending,Accepted,Rejected',
         ]);
 
-        $application->update([
-            'status' => $request->status,
-        ]);
+        try {
+            $application->update([
+                'status' => $request->status,
+            ]);
 
-        return redirect()->route('applications.index')->with('success', 'Application status updated successfully.');
+            return redirect()->route('applications.index')
+                ->with('success', 'Application status updated successfully.');
+        } catch (\Exception $e) {
+            return redirect()->route('applications.index')
+                ->with('error', 'Failed to update application status.');
+        }
     }
+
 
     public function destroy(Application $application)
     {
         $application->delete();
 
         return redirect()->route('applications.index')->with('success', 'Application deleted successfully.');
+    }
+
+    public function showap(Application $application)
+    {
+        if ($application->job->company->id !== Auth::user()->company->id) {
+            abort(403, 'Unauthorized action.');
+        }
+
+        return view('admin.applications.show', compact('application'));
     }
 }

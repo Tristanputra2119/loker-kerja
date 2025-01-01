@@ -4,10 +4,10 @@
 <div class="container mx-auto py-8">
     <div class="bg-white shadow-md rounded-lg p-6">
         <div class="flex items-center space-x-4">
-            @if($company->logo)
-            <img src="{{ asset('storage/logos/' . $company->logo) }}" alt="{{ $company->company_name }} Logo" class="w-32 h-32 object-cover rounded-full">
+            @if($company && $company->logo)
+            <img src="{{ asset('storage/' . $company->logo) }}" alt="Company Logo" class="w-24 h-24 object-cover rounded">
             @else
-            <img src="https://via.placeholder.com/150" alt="Default Logo" class="w-32 h-32 object-cover rounded-full">
+            <img src="https://via.placeholder.com/150" alt="Default Logo" class="w-24 h-24 object-cover rounded-full">
             @endif
             <div>
                 <h1 class="text-2xl font-bold text-gray-800">{{ $company->company_name }}</h1>
@@ -39,7 +39,7 @@
             <ul class="space-y-4">
                 @foreach($company->jobs as $job)
                 <li class="border p-4 rounded-lg">
-                    <a href="{{ route('jobs.show', $job->id) }}" class="text-blue-500 font-semibold text-lg hover:underline">{{ $job->title }}</a>
+                    <a href="{{ route('job.show', $job->id) }}" class="text-blue-500 font-semibold text-lg hover:underline">{{ $job->title }}</a>
                     <p class="text-sm text-gray-600">Lokasi: {{ $job->location }}</p>
                 </li>
                 @endforeach

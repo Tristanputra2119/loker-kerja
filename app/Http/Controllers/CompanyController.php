@@ -6,6 +6,9 @@ use App\Models\User;
 use App\Models\Company;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Jobs;
+use App\Models\Testimonial;
+
 
 class CompanyController extends Controller
 {
@@ -36,6 +39,15 @@ class CompanyController extends Controller
 
         return view('admin.companies.index', compact('companies'));
     }
+    
+    // public function show($id)
+    // {
+    //     $job = Jobs::findOrFail($id);
+    //     $testimonials = Testimonial::all();
+    //     $company = $job->company;
+
+    //     return view('user.job.detail', compact('job', 'company', 'testimonials'));
+    // }
 
     // Menampilkan form untuk membuat perusahaan baru
     public function create()
