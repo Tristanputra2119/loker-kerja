@@ -164,7 +164,18 @@ class JobsController extends Controller
         $testimonials = Testimonial::all();
         $company = $job->company;
 
-        return view('user.job.detail', compact('job', 'company', 'testimonials'));
+        // Cek apakah pengguna sudah melamar pekerjaan ini
+        $existingApplication = Application::where('job_id', $id)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if ($existingApplication) {
+            // Jika sudah melamar, beri status untuk ditampilkan di view
+            $applicationStatus = 'Lamaran Anda sedang diperiksa.';
+        }
+
+
+        return view('user.job.detail', compact('job', 'company', 'testimonials','applicationStatus'));
     }
 
 
@@ -174,6 +185,16 @@ class JobsController extends Controller
 
         $job = Jobs::findOrFail($jobId);
 
+
+        // Cek apakah pengguna sudah melamar pekerjaan ini
+        $existingApplication = Application::where('job_id', $jobId)
+            ->where('user_id', Auth::id())
+            ->first();
+
+        if ($existingApplication) {
+            return redirect()->route('job.show', $jobId)->with('status', 'Lamaran Anda sudah diajukan dan sedang diperiksa.');
+        }
+
         // Validasi input
         $validated = $request->validate([
             'name' => 'required|string|max:255',
@@ -181,20 +202,24 @@ class JobsController extends Controller
             'message' => 'nullable|string',
         ]);
 
-        // Simpan data ke tabel application
-        Application::create([
+        // Ambil objek model Application
+        $app = new Application();
 
-            'job_id' => $jobId,
-            'user_id' => Auth::id(),
-            'applicant_name' => $validated['name'],
-            'applicant_email' => $validated['email'],
-            'message' => $validated['message'],
-            'status' => 'pending', // Nilai default
-            'applied_at' => now(),
-        ]);
+        // Set properti untuk objek model
+        $app->job_id = $jobId;
+        $app->user_id = Auth::id();
+        $app->applicant_name = $validated['name'];
+        $app->applicant_email = $validated['email'];
+        $app->message = $validated['message'];
+        $app->status = 'pending'; // Nilai default
+        $app->applied_at = now(); // Tanggal saat ini
+
+        // Simpan data ke database
+        $app->save();
+
 
         // Redirect dengan pesan sukses
-        return redirect()->route('job.show', $jobId)->with('success', 'Lamaran Anda berhasil dikirim.');
+        return redirect()->route('job.index', $jobId)->with('success', 'Lamaran Anda berhasil dikirim.');
     }
 
 }

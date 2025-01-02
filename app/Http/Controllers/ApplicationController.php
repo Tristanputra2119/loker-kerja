@@ -20,9 +20,11 @@ class ApplicationController extends Controller
         return view('admin.applications.index', compact('applications'));
     }
 
-    public function show(Application $application)
+    public function show(Application $applications, $id)
     {
-        return view('admin.applications.show', compact('application'));
+        $applications = Application::find($id);
+        return view('admin.applications.show', compact('applications'));
+
     }
 
     public function update(Request $request, Application $application)

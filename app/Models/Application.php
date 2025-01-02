@@ -13,9 +13,11 @@ class Application extends Model
         'job_id',
         'user_id',
         'status',
-        'applied_at',
-    ];
 
+    ];
+    protected $casts = [
+        'applied_at' => 'datetime',
+    ];
     public function user()
     {
         return $this->belongsTo(User::class);

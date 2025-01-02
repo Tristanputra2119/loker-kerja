@@ -9,10 +9,11 @@ class Jobs extends Model
     protected $fillable = [
         'job_id',
         'user_id',
-        'status',
-        'applied_at',
         'applicant_name',
         'applicant_email',
+        'message',
+        'status',
+        'applied_at',
     ];
     public function company()
     {
