@@ -57,7 +57,7 @@
 
                     @if(auth()->user()->role === 'company')
                     <li>
-                        <a href="/company/jobs" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        <a href="/company/job_listing" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
                             <i class="fa-solid fa-briefcase text-gray-500"></i>
                             <span class="ml-3">Jobs</span>
                         </a>
@@ -75,7 +75,7 @@
 
                     @if(auth()->user()->role === 'company')
                     <li>
-                        <a href="/company/applications" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
+                        <a href="/company/job_applications" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
                             <i class="fa-solid fa-check text-gray-500"></i>
                             <span class="ml-3">Applications</span>
                         </a>

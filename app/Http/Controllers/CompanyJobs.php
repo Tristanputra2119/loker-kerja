@@ -80,7 +80,7 @@ class CompanyJobs extends Controller
 
         $job->delete();
 
-        return redirect()->route('jobs.index')->with('success', 'Job deleted successfully.');
+        return redirect()->route('jobs. index')->with('success', 'Job deleted successfully.');
     }
 
     private function authorizeJob(Jobs $job)

@@ -56,6 +56,10 @@ Route::resource('users', UserController::class)->middleware('auth');
 Route::resource('companies', CompanyController::class)->middleware('auth');
 Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard');
 
+
+// Company Jobs
+Route::resource('company/job_listing', CompanyJobs::class)->middleware('auth');
+Route::resource('company/job_applications',ApplicationController::class)->middleware('auth');
 // Profile Routes
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');

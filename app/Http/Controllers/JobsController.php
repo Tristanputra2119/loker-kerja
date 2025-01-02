@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Application;
 use App\Models\Jobs;
 use App\Models\JobCategory;
 use Illuminate\Http\Request;
@@ -171,16 +172,27 @@ class JobsController extends Controller
     public function apply(Request $request, $jobId)
     {
         $job = Jobs::findOrFail($jobId);
-        // Validasi data
+
+        // Validasi input
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255',
             'message' => 'nullable|string',
         ]);
 
-        // Logika untuk menyimpan lamaran atau mengirim email
-        // Contoh: Simpan ke database atau kirim notifikasi
+        // Simpan data ke tabel application
+        Application::create([
+            'job_id' => $jobId,
+            'user_id' => Auth::id(),
+            'applicant_name' => $validated['name'],
+            'applicant_email' => $validated['email'],
+            'message' => $validated['message'],
+            'status' => 'pending', // Nilai default
+            'applied_at' => now(),
+        ]);
 
+        // Redirect dengan pesan sukses
         return redirect()->route('job.show', $jobId)->with('success', 'Lamaran Anda berhasil dikirim.');
     }
+
 }
