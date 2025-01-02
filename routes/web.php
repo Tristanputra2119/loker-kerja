@@ -97,7 +97,7 @@ Route::middleware(['auth'])->group(function () {
 Route::get('job/{job}', [JobsController::class, 'show'])->name('job.show');
 
 // Job Applications
-Route::get('/job/{job}/apply', [JobsController::class, 'apply'])->name('user.job.apply');
+Route::post('/job/{job}/apply', [JobsController::class, 'apply'])->name('user.job.apply');
 
 // Company Profile
 Route::get('/company/{id}', [CompanyController::class, 'show'])->name('company.profile');

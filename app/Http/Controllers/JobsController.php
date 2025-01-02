@@ -171,6 +171,7 @@ class JobsController extends Controller
     // Method untuk melamar pekerjaan
     public function apply(Request $request, $jobId)
     {
+
         $job = Jobs::findOrFail($jobId);
 
         // Validasi input
@@ -182,6 +183,7 @@ class JobsController extends Controller
 
         // Simpan data ke tabel application
         Application::create([
+
             'job_id' => $jobId,
             'user_id' => Auth::id(),
             'applicant_name' => $validated['name'],

@@ -7,13 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 class Jobs extends Model
 {
     protected $fillable = [
-        'company_id',
-        'title',
-        'description',
-        'requirements',
-        'salary',
-        'location',
-        'job_category_id',
+        'job_id',
+        'user_id',
+        'status',
+        'applied_at',
+        'applicant_name',
+        'applicant_email',
     ];
     public function company()
     {
