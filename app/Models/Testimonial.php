@@ -9,6 +9,10 @@ class Testimonial extends Model
 {
     use HasFactory;
 
-    // Tentukan kolom yang bisa diisi (fillable)
-    protected $fillable = ['name', 'content'];
+    protected $fillable = ['job_id', 'user_name', 'message'];
+
+    public function job()
+    {
+        return $this->belongsTo(Jobs::class);
+    }
 }

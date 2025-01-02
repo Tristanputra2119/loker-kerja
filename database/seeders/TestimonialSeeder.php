@@ -2,25 +2,23 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\Testimonial;
 
 class TestimonialSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-
     public function run()
     {
         Testimonial::create([
-            'name' => 'John Doe',
-            'content' => 'This is a great job listing website!'
+            'job_id' => 1,
+            'user_name' => 'John Doe',
+            'message' => 'This job was a great experience!'
         ]);
+
         Testimonial::create([
-            'name' => 'Jane Smith',
-            'content' => 'I found my dream job here.'
+            'job_id' => 2,
+            'user_name' => 'Jane Smith',
+            'message' => 'Amazing opportunity with fantastic team.'
         ]);
     }
 }

@@ -25,4 +25,19 @@ class Application extends Model
     {
         return $this->belongsTo(Jobs::class);
     }
+
+    public function company()
+    {
+        return $this->belongsTo(Company::class);
+    }
+
+    public function getStatusLabelAttribute()
+    {
+        return match ($this->status) {
+            'Pending' => 'Menunggu',
+            'Accepted' => 'Diterima',
+            'Rejected' => 'Ditolak',
+            default => 'Tidak Diketahui',
+        };
+    }
 }
