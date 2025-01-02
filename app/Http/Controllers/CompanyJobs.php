@@ -58,8 +58,7 @@ class CompanyJobs extends Controller
 
     public function update(Request $request, Jobs $job)
     {
-        $this->authorizeJob($job);
-
+        // Validasi secara manual
         $request->validate([
             'title' => 'required|string|max:255',
             'description' => 'required|string',
@@ -69,8 +68,18 @@ class CompanyJobs extends Controller
             'job_category_id' => 'nullable|exists:job_categories,id',
         ]);
 
-        $job->update($request->all());
+        // Update data secara manual
+        $job->title = $request->input('title');
+        $job->description = $request->input('description');
+        $job->requirements = $request->input('requirements');
+        $job->salary = $request->input('salary');
+        $job->location = $request->input('location');
+        $job->job_category_id = $request->input('job_category_id');
 
+        // Simpan perubahan
+        $job->save();
+
+        // Redirect atau beri feedback
         return redirect()->route('jobs.index')->with('success', 'Job updated successfully.');
     }
 

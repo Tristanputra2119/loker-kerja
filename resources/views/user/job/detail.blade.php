@@ -15,8 +15,8 @@
                         <div>
                             <h1 class="text-3xl font-semibold text-gray-900">{{ $job->title }}</h1>
                             <p class="text-sm text-gray-700">Perusahaan:
-                                <a href="{{ route('company.profile', $job->company->id) }}" class="text-blue-500 underline">
-                                    {{ $job->company->company_name }}
+                                <a href="{{ route('company.profile', $company->id) }}" class="text-blue-500 underline">
+                                    {{ $company->company_name }}
                                 </a>
                             </p>
                             <p class="text-sm text-gray-700">Kategori: {{ $job->category->name }}</p>
@@ -24,6 +24,7 @@
                             <p class="text-sm text-gray-700">Diposting: {{ $job->created_at->diffForHumans() }}</p>
                         </div>
                     </div>
+
                     <div>
                         <h2 class="text-lg font-medium text-gray-900">Deskripsi Pekerjaan</h2>
                         <p class="text-gray-800 leading-relaxed">{{ $job->description }}</p>
@@ -38,10 +39,30 @@
                     </div>
                 </div>
 
-                <!-- Jika pengguna sudah melamar, tampilkan pesan -->
+                <!-- Menampilkan status lamaran -->
                 @if ($applicationStatus)
                     <div class="mt-8">
-                        <p class="text-green-600">{{ $applicationStatus }}</p>
+                        @if($applicationStatus == 'Accepted')
+                            <p class="text-green-600">Selamat Anda diterima diperusahaan ini, kami akan menghubungi anda secepat mungkin! </p>
+                        @elseif($applicationStatus == 'Rejected')
+                            <p class="text-red-600">Sayangnya lamaran Anda ditolak. Anda dapat mencoba melamar lagi.</p>
+                            <!-- Form lamaran ulang -->
+                            <form method="POST" action="{{ route('user.job.apply', $job->id) }}" class="space-y-4">
+                                @csrf
+                                <div>
+                                    <label for="message" class="block text-sm font-medium text-gray-700">Pesan</label>
+                                    <textarea
+                                        id="message"
+                                        name="message"
+                                        rows="4"
+                                        class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2"
+                                    ></textarea>
+                                </div>
+                                <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
+                                    Kirim Lamaran Ulang
+                                </button>
+                            </form>
+                        @endif
                     </div>
                 @else
                     <!-- Form Apply -->
@@ -78,7 +99,7 @@
                                     name="message"
                                     rows="4"
                                     class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2">
-                            </textarea>
+                                </textarea>
                             </div>
                             <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
                                 Kirim Lamaran
@@ -99,20 +120,6 @@
                 @empty
                     <p class="text-gray-600">Belum ada testimoni untuk pekerjaan ini.</p>
                 @endforelse
-            </div>
-        </div>
-
-        <!-- Profil Pengguna -->
-        <div class="mt-12 flex items-center space-x-6">
-            @if(auth()->check() && auth()->user()->profile_picture)
-                <img src="{{ asset('storage/' . auth()->user()->profile_picture) }}" alt="Foto Profil" class="w-16 h-16 rounded-full">
-            @else
-                <img src="{{ asset('images/default-profile.png') }}" alt="Foto Profil" class="w-16 h-16 rounded-full">
-            @endif
-            <div>
-                <h3 class="text-xl font-bold text-gray-900">{{ Auth::user()->name }}</h3>
-                <p class="text-sm text-gray-600">{{ Auth::user()->email }}</p>
-                <p class="text-sm text-gray-600">{{ Auth::user()->bio ?? 'Tidak ada bio yang ditambahkan' }}</p>
             </div>
         </div>
     </div>

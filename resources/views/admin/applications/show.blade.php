@@ -39,19 +39,19 @@
                 <!-- Applied At -->
                 <div>
                     <strong class="text-gray-600">Applied At:</strong>
-                    <p class="text-gray-800">{{ $applications->applied_at->format('Y-m-d H:i') }}</p>
+                    <p class="text-gray-800">{{ $applications->applied_at->diffforHumans() }}</p>
                 </div>
 
                 <!-- Created At -->
                 <div>
                     <strong class="text-gray-600">Created At:</strong>
-                    <p class="text-gray-800">{{ $applications->created_at->format('Y-m-d H:i') }}</p>
+                    <p class="text-gray-800">{{ $applications->created_at->diffforHumans() }}</p>
                 </div>
 
                 <!-- Updated At -->
                 <div>
                     <strong class="text-gray-600">Updated At:</strong>
-                    <p class="text-gray-800">{{ $applications->updated_at->format('Y-m-d H:i') }}</p>
+                    <p class="text-gray-800">{{ $applications->updated_at->diffforHumans()}}</p>
                 </div>
 
                 <!-- ID -->

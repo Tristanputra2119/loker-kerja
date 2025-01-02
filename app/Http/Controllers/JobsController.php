@@ -161,21 +161,18 @@ class JobsController extends Controller
     public function show($id)
     {
         $job = Jobs::findOrFail($id);
-        $testimonials = Testimonial::all();
-        $company = $job->company;
+        $company = $job->company;  // Ambil data perusahaan yang memposting pekerjaan
 
-        // Cek apakah pengguna sudah melamar pekerjaan ini
-        $existingApplication = Application::where('job_id', $id)
-            ->where('user_id', Auth::id())
+        // Cari status lamaran pengguna untuk pekerjaan ini
+        $application = Application::where('job_id', $job->id)
+            ->where('user_id', auth()->id())
             ->first();
 
-        if ($existingApplication) {
-            // Jika sudah melamar, beri status untuk ditampilkan di view
-            $applicationStatus = 'Lamaran Anda sedang diperiksa.';
-        }
+        // Tentukan status lamaran, jika tidak ada lamaran, set null
+        $applicationStatus = $application ? $application->status : null;
 
-
-        return view('user.job.detail', compact('job', 'company', 'testimonials','applicationStatus'));
+        // Kirim data ke view
+        return view('user.job.detail', compact('job', 'company', 'applicationStatus'));
     }
 
 

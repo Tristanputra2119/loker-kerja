@@ -21,7 +21,7 @@
                         <td class="py-4 px-4 text-gray-800">{{ $application->job->title }}</td>
                         <td class="py-4 px-4 text-gray-800">{{ $application->user->name }}</td>
                         <td class="py-4 px-4 text-gray-800">{{ $application->status }}</td>
-                        <td class="py-4 px-4 text-gray-800">{{ $application->applied_at->format('Y-m-d H:i') }}</td>
+                        <td class="py-4 px-4 text-gray-800">{{ $application->applied_at->diffforHumans()}}</td>
                         <td class="py-4 px-4 space-x-3">
                             <!-- View Button -->
                             <a href="{{ route('applications.show', $application->id) }}" class="text-blue-600 hover:text-blue-800 font-medium px-4 py-2 rounded-md border border-transparent bg-transparent hover:bg-blue-50 transition">View</a>
