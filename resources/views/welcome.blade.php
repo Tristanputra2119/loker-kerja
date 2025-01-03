@@ -16,9 +16,9 @@
     <header class="bg-white text-black py-4 [box-shadow:0_4px_8px_rgba(169,169,169,0.1)] sticky top-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between items-center">
-                <div class="text-lg font-bold">
-                    <a href="{{ url('/') }}" class="text-black">PCC</a>
-                </div>
+                <a href="{{ route('home') }}">
+                    <h1 class="text-xl font-bold text-blue-600">Primakara <span class="text-gray-900">Career Centre</span></h1>
+                </a>
 
                 <!-- Navigation -->
                 @if (Route::has('login'))

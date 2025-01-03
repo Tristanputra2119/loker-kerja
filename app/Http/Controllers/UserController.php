@@ -56,7 +56,7 @@ class UserController extends Controller
             'role' => $request->role,
         ]);
 
-        return redirect()->route('admin.users.index');
+        return redirect()->route('users.index');
     }
 
     public function edit(User $user)
