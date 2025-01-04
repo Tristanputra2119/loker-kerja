@@ -43,7 +43,7 @@
                 @if ($applicationStatus)
                     <div class="mt-8">
                         @if($applicationStatus == 'Accepted')
-                            <p class="text-green-600">Selamat Anda diterima diperusahaan ini, kami akan menghubungi anda secepat mungkin! </p>
+                            <p class="text-green-600">Selamat Anda diterima di perusahaan ini, kami akan menghubungi Anda secepat mungkin!</p>
                         @elseif($applicationStatus == 'Rejected')
                             <p class="text-red-600">Sayangnya lamaran Anda ditolak. Anda dapat mencoba melamar lagi.</p>
                             <!-- Form lamaran ulang -->
@@ -62,6 +62,8 @@
                                     Kirim Lamaran Ulang
                                 </button>
                             </form>
+                        @elseif($applicationStatus == 'Pending')
+                            <p class="text-yellow-600">Lamaran Anda masih dalam proses dan sedang diperiksa.</p>
                         @endif
                     </div>
                 @else

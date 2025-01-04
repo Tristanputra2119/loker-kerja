@@ -169,11 +169,13 @@ class JobsController extends Controller
             ->first();
 
         // Tentukan status lamaran, jika tidak ada lamaran, set null
-        $applicationStatus = $application ? $application->status : null;
+        $applicationStatus = $application ? $application->status : 'pending';  // Set default ke 'pending'
+
 
         // Kirim data ke view
         return view('user.job.detail', compact('job', 'company', 'applicationStatus'));
     }
+
 
 
     // Method untuk melamar pekerjaan
@@ -194,8 +196,8 @@ class JobsController extends Controller
 
         // Validasi input
         $validated = $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
+            'applicant_name' => 'required|string|max:255',
+            'applicant_email' => 'required|email|max:255',
             'message' => 'nullable|string',
         ]);
 
@@ -205,8 +207,8 @@ class JobsController extends Controller
         // Set properti untuk objek model
         $app->job_id = $jobId;
         $app->user_id = Auth::id();
-        $app->applicant_name = $validated['name'];
-        $app->applicant_email = $validated['email'];
+        $app->applicant_name = $validated['applicant_name'];
+        $app->applicant_email = $validated['applicant_email'];
         $app->message = $validated['message'];
         $app->status = 'pending'; // Nilai default
         $app->applied_at = now(); // Tanggal saat ini
