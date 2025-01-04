@@ -161,7 +161,7 @@ class JobsController extends Controller
     public function show($id)
     {
         $job = Jobs::findOrFail($id);
-        $company = $job->company;  // Ambil data perusahaan yang memposting pekerjaan
+        $company = $job->company;
 
         // Cari status lamaran pengguna untuk pekerjaan ini
         $application = Application::where('job_id', $job->id)
@@ -169,13 +169,11 @@ class JobsController extends Controller
             ->first();
 
         // Tentukan status lamaran, jika tidak ada lamaran, set null
-        $applicationStatus = $application ? $application->status : 'pending';  // Set default ke 'pending'
-
+        $applicationStatus = $application ? $application->status : null;
 
         // Kirim data ke view
         return view('user.job.detail', compact('job', 'company', 'applicationStatus'));
     }
-
 
 
     // Method untuk melamar pekerjaan
