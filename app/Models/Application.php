@@ -13,11 +13,13 @@ class Application extends Model
         'job_id',
         'user_id',
         'status',
-
+        'message',  // Menambahkan kolom message
     ];
+
     protected $casts = [
         'applied_at' => 'datetime',
     ];
+
     public function user()
     {
         return $this->belongsTo(User::class);
@@ -25,7 +27,7 @@ class Application extends Model
 
     public function job()
     {
-        return $this->belongsTo(Jobs::class);
+        return $this->belongsTo(Jobs::class); // pastikan Job ada di model ini
     }
 
     public function company()

@@ -7,14 +7,15 @@ use Illuminate\Database\Eloquent\Model;
 class Jobs extends Model
 {
     protected $fillable = [
-        'job_id',
-        'user_id',
-        'applicant_name',
-        'applicant_email',
-        'message',
-        'status',
-        'applied_at',
+        'company_id',
+        'job_category_id',
+        'title',
+        'description',
+        'requirements',
+        'salary',
+        'location',
     ];
+
     public function company()
     {
         return $this->belongsTo(Company::class);
@@ -25,6 +26,7 @@ class Jobs extends Model
         return $this->belongsTo(JobCategory::class, 'job_category_id');
     }
 
+    // Relasi dengan testimonial (jika ada)
     public function testimonials()
     {
         return $this->hasMany(Testimonial::class, 'job_id', 'id');
