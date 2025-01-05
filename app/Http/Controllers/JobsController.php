@@ -161,6 +161,7 @@ class JobsController extends Controller
     {
         $job = Jobs::findOrFail($id);
         $company = $job->company;
+        $company = $job->company;
 
         $acceptedUsers = $job->acceptedUsers;
         // Cari status lamaran pengguna untuk pekerjaan ini

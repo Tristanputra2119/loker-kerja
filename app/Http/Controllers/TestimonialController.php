@@ -19,7 +19,6 @@ class TestimonialController extends Controller
         $testimonial = new Testimonial();
         $testimonial->message = $request->message;
         $testimonial->job_id = $request->job_id;
-        $testimonial->name = Auth::user()->name; // Menyimpan nama pengirim
         $testimonial->user_id = Auth::id(); // Bisa menggunakan user_id jika kamu ingin menyimpan ID pengguna
         $testimonial->save();
 
