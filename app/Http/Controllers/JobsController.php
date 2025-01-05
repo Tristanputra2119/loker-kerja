@@ -160,8 +160,7 @@ class JobsController extends Controller
     public function show($id)
     {
         $job = Jobs::findOrFail($id);
-        $company = $job->company;
-        $company = $job->company;
+        $company = $job->company;  // Ambil data perusahaan yang memposting pekerjaan
 
         $acceptedUsers = $job->acceptedUsers;
         // Cari status lamaran pengguna untuk pekerjaan ini
@@ -170,9 +169,8 @@ class JobsController extends Controller
             ->first();
 
         // Tentukan status lamaran, jika tidak ada lamaran, set null
-        $applicationStatus = $application ? $application->status : null;
+        $applicationStatus = $application ? $application->status : 'pending';  // Set default ke 'pending'
 
-        $testimonials = $job->testimonials()->paginate(5);
 
         // Kirim data ke view
         return view('user.job.detail', compact('job', 'company', 'applicationStatus', 'acceptedUsers', 'testimonials'));
