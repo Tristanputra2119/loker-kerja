@@ -7,7 +7,6 @@ use App\Models\Jobs;
 use App\Models\JobCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use App\Models\Testimonial;
 
 class JobsController extends Controller
@@ -161,51 +160,113 @@ class JobsController extends Controller
     public function show($id)
     {
         $job = Jobs::findOrFail($id);
-        $company = $job->company;  // Ambil data perusahaan yang memposting pekerjaan
+        $company = $job->company;
 
+        $acceptedUsers = $job->acceptedUsers;
         // Cari status lamaran pengguna untuk pekerjaan ini
         $application = Application::where('job_id', $job->id)
             ->where('user_id', Auth::id())
             ->first();
 
         // Tentukan status lamaran, jika tidak ada lamaran, set null
-        $applicationStatus = $application ? $application->status : 'pending';  // Set default ke 'pending'
+        $applicationStatus = $application ? $application->status : null;
 
+        $testimonials = $job->testimonials()->paginate(5);
 
         // Kirim data ke view
-        return view('user.job.detail', compact('job', 'company', 'applicationStatus'));
+        return view('user.job.detail', compact('job', 'company', 'applicationStatus', 'acceptedUsers', 'testimonials'));
     }
 
 
-
     // Method untuk melamar pekerjaan
+
     public function apply(Request $request, $jobId)
     {
-        $user = Auth::user();
 
-        // Cek apakah user sudah melamar pekerjaan ini
-        $existingApplication = Application::where('user_id', $user->id)
-            ->where('job_id', $jobId)
+        $job = Jobs::findOrFail($jobId);
+
+
+        // Cek apakah pengguna sudah melamar pekerjaan ini
+        $existingApplication = Application::where('job_id', $jobId)
+            ->where('user_id', Auth::id())
             ->first();
 
-        // Jika sudah ada lamaran, kita perbarui status atau pesan
         if ($existingApplication) {
-            // Update status atau pesan jika diperlukan
-            $existingApplication->update([
-                'message' => $request->message, // Update pesan
-                'status' => 'Pending',           // Status bisa diperbarui jika diperlukan
-            ]);
-            return redirect()->route('job.detail', $jobId)->with('status', 'Lamaran Anda telah diperbarui.');
-        } else {
-            // Jika belum ada lamaran, buat lamaran baru
-            Application::create([
-                'user_id' => $user->id,
-                'job_id' => $jobId,
-                'status' => 'Pending',  // Status default adalah Pending
-                'message' => $request->message,
-                'applied_at' => now(), // Simpan waktu lamaran
-            ]);
-            return redirect()->route('job.detail', $jobId)->with('status', 'Lamaran Anda telah dikirim.');
+            return redirect()->route('job.show', $jobId)->with('status', 'Lamaran Anda sudah diajukan dan sedang diperiksa.');
         }
+
+        // Validasi input
+        $validated = $request->validate([
+            'applicant_name' => 'required|string|max:255',
+            'applicant_email' => 'required|email|max:255',
+            'message' => 'nullable|string',
+        ]);
+
+        // Ambil objek model Application
+        $app = new Application();
+
+        // Set properti untuk objek model
+        $app->job_id = $jobId;
+        $app->user_id = Auth::id();
+        $app->applicant_name = $validated['applicant_name'];
+        $app->applicant_email = $validated['applicant_email'];
+        $app->message = $validated['message'];
+        $app->status = 'pending'; // Nilai default
+        $app->applied_at = now(); // Tanggal saat ini
+
+        // Simpan data ke database
+        $app->save();
+
+
+        // Redirect dengan pesan sukses
+        return redirect()->route('job.index', $jobId)->with('success', 'Lamaran Anda berhasil dikirim.');
+    }
+
+    public function showTestimonialForm($jobId)
+    {
+        $userId = Auth::user()->id;
+
+        // Periksa apakah user diterima di job ini
+        $application = Application::where('job_id', $jobId)
+            ->where('user_id', $userId)
+            ->where('status', 'Accepted')
+            ->first();
+
+        if (!$application) {
+            return redirect()->back()->with('error', 'Anda belum diterima di pekerjaan ini, sehingga tidak dapat memberikan testimonial.');
+        }
+
+        $job = Jobs::findOrFail($jobId);
+        return view('job.testimonial-form', compact('job'));
+    }
+
+
+    public function submitTestimonial(Request $request, $jobId)
+    {
+        $userId = Auth::id();
+
+        // Periksa apakah user diterima di job ini
+        $application = Application::where('job_id', $jobId)
+            ->where('user_id', $userId)
+            ->where('status', 'Accepted')
+            ->first();
+
+        if (!$application) {
+            return redirect()->back()->with('error', 'Anda tidak berhak memberikan testimonial untuk pekerjaan ini.');
+        }
+
+        // Validasi input
+        $request->validate([
+            'message' => 'required|string|max:1000',
+        ]);
+
+        // Simpan testimonial
+        Testimonial::create([
+            'job_id' => $jobId,
+            'user_name' => Auth::user()->name,
+            'message' => $request->message,
+        ]);
+
+        return redirect()->route('user.job.index')->with('success', 'Testimonial berhasil dikirim!');
     }
 }

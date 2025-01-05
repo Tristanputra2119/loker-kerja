@@ -9,7 +9,11 @@ class Testimonial extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['job_id', 'user_name', 'message'];
+    protected $fillable = ['message', 'job_id', 'name', 'user_id'];
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 
     public function job()
     {

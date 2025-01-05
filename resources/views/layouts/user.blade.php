@@ -6,11 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ config('app.name', 'Primakara Career Centre') }}</title>
     @vite('resources/css/app.css') <!-- Pastikan Tailwind diintegrasikan -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-50 .navigation">
-
-    <!-- Header -->
+<body class="bg-gray-50 .navigation flex flex-col min-h-screen">
     <!-- Header -->
     <header class="bg-white shadow-md py-4 sticky top-0 z-10">
         <div class="container mx-auto flex justify-between items-center px-4">
@@ -38,7 +37,6 @@
                 </button>
                 <div id="profile-dropdown" class="absolute right-0 mt-2 w-48 bg-white border border-gray-300 rounded-lg shadow-lg hidden z-10">
                     <ul class="py-2">
-                        <li><a href="{{ route('notifications.index') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Notifikasi</a></li>
                         <li><a href="{{ route('profil.info') }}" class="block px-4 py-2 text-gray-700 hover:bg-blue-100">Info Profil</a></li>
                         <li>
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="block">
@@ -52,14 +50,13 @@
         </div>
     </header>
 
-
     <!-- Main Content -->
-    <main class="home">
+    <main class="flex-grow">
         @yield('content') <!-- Konten dinamis akan ditempatkan di sini -->
     </main>
 
     <!-- Footer -->
-    <footer class="bg-[#00B4DB] text-white py-8">
+    <footer class="bg-[#00B4DB] text-white py-8 mt-auto">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
                 <!-- About Section -->

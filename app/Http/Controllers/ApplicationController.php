@@ -6,6 +6,7 @@ use App\Models\Application;
 use App\Models\Jobs;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\Notification;
 
 class ApplicationController extends Controller
 {
@@ -20,10 +21,15 @@ class ApplicationController extends Controller
         return view('admin.applications.index', compact('applications'));
     }
 
-    public function show(Application $application)
+    public function show($id)
     {
+        // Fetch the application with the given ID
+        $application = Application::findOrFail($id);
+
+        // Pass the application data to the view
         return view('admin.applications.show', compact('application'));
     }
+
 
     public function update(Request $request, Application $application)
     {
@@ -59,5 +65,42 @@ class ApplicationController extends Controller
         }
 
         return view('admin.applications.show', compact('application'));
+    }
+
+    public function store(Request $request, $jobId)
+    {
+        // Validasi request
+        $request->validate([
+            'message' => 'nullable|string|max:1000',
+        ]);
+
+        // Ambil pekerjaan yang dilamar
+        $job = Jobs::findOrFail($jobId);
+
+        // Cek apakah pekerjaan tersebut ada
+        if (!$job) {
+            return redirect()->back()->with('error', 'Pekerjaan tidak ditemukan.');
+        }
+
+        // Buat lamaran
+        $application = new Application();
+        $application->user_id = Auth::id();
+        $application->job_id = $job->id;
+        $application->status = 'Pending';  // Status awal lamaran
+        $application->message = $request->message;
+        $application->save();
+
+
+        return redirect()->route('jobs.index')->with('success', 'Lamaran telah dikirim!');
+    }
+
+    public function canSubmitTestimonial($jobId, $userId)
+    {
+        $application = Application::where('job_id', $jobId)
+            ->where('user_id', $userId)
+            ->where('status', 'Accepted') // Pastikan hanya status 'Accepted'
+            ->first();
+
+        return $application !== null; // True jika user diterima
     }
 }

@@ -43,35 +43,50 @@
     </div>
 </section>
 
-<!-- Contact Form Section -->
+<!-- Additional Contact Info Section -->
 <section class="bg-gray-50 py-20">
     <div class="container mx-auto text-center">
-        <h3 class="text-3xl font-semibold text-gray-800">Send Us a Message</h3>
-        <p class="mt-4 text-lg text-gray-600">Fill out the form below, and we will respond as soon as possible.</p>
+        <h3 class="text-3xl font-semibold text-gray-800">Business Hours</h3>
+        <p class="mt-4 text-lg text-gray-600">We are available to assist you during the following hours:</p>
 
-        <!-- Form -->
-        <div class="mt-8 bg-white shadow-xl rounded-lg p-12">
-            <form action="#" method="POST" class="space-y-8">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    <div>
-                        <label for="name" class="block text-lg font-medium text-gray-700">Your Name</label>
-                        <input type="text" id="name" name="name" class="mt-2 block w-full px-6 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" required>
-                    </div>
-                    <div>
-                        <label for="email" class="block text-lg font-medium text-gray-700">Your Email</label>
-                        <input type="email" id="email" name="email" class="mt-2 block w-full px-6 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" required>
-                    </div>
-                </div>
+        <div class="mt-8">
+            <ul class="text-left mx-auto max-w-2xl text-lg text-gray-600 space-y-4">
+                <li class="flex justify-between">
+                    <span>Monday - Friday:</span>
+                    <span>9:00 AM - 6:00 PM</span>
+                </li>
+                <li class="flex justify-between">
+                    <span>Saturday:</span>
+                    <span>10:00 AM - 3:00 PM</span>
+                </li>
+                <li class="flex justify-between">
+                    <span>Sunday:</span>
+                    <span>Closed</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</section>
 
-                <div>
-                    <label for="message" class="block text-lg font-medium text-gray-700">Your Message</label>
-                    <textarea id="message" name="message" rows="6" class="mt-2 block w-full px-6 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-200" required></textarea>
-                </div>
+<!-- Social Media Section -->
+<section class="py-20">
+    <div class="container mx-auto text-center">
+        <h3 class="text-3xl font-semibold text-gray-800">Follow Us on Social Media</h3>
+        <p class="mt-4 text-lg text-gray-600">Stay connected and get the latest updates by following us on social media:</p>
 
-                <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-md hover:bg-blue-700 transition duration-300">
-                    Send Message
-                </button>
-            </form>
+        <div class="mt-8 flex justify-center space-x-8">
+            <a href="https://www.facebook.com" target="_blank" class="text-blue-600 hover:text-blue-800 text-2xl">
+                <i class="fab fa-facebook-square"></i>
+            </a>
+            <a href="https://www.twitter.com" target="_blank" class="text-blue-600 hover:text-blue-800 text-2xl">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="https://www.instagram.com" target="_blank" class="text-blue-600 hover:text-blue-800 text-2xl">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="https://www.linkedin.com" target="_blank" class="text-blue-600 hover:text-blue-800 text-2xl">
+                <i class="fab fa-linkedin"></i>
+            </a>
         </div>
     </div>
 </section>

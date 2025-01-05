@@ -2,12 +2,31 @@
 @tailwind components;
 @tailwind utilities;
 
-
-
 body::-webkit-scrollbar {
     display: block;
     -ms-overflow-style: none;
     scrollbar-width: none;
     overflow-y: hidden;
     overflow-x: hidden;
+}
+
+/* Jika perlu menambahkan kustomisasi di luar Tailwind CSS */
+.notification {
+    @apply p-4 mb-4 rounded-md;
+}
+
+.notification.unread {
+    @apply border-l-4 border-blue-500 bg-white;
+}
+
+.notification.read {
+    @apply border-l-4 border-green-500 bg-green-100;
+}
+
+.badge-read {
+    @apply text-xs font-medium text-green-700 bg-green-200 py-1 px-3 rounded-md;
+}
+
+.btn-mark-read {
+    @apply text-white bg-green-500 hover:bg-green-600 px-3 py-1 rounded-md text-xs;
 }

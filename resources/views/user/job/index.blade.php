@@ -80,7 +80,7 @@
                     <h3 class="text-lg font-semibold text-gray-800">{{ $job->title }}</h3>
                     <p class="text-sm text-gray-600 mb-2">Lokasi: {{ $job->location }}</p>
                     <p class="text-sm text-gray-600 mb-2">Kategori: {{ $job->category->name }}</p>
-                    <p class="text-sm text-gray-600 mb-2">Perusahaan: {{ $job->company->name }}</p>
+                    <p class="text-sm text-gray-600 mb-2">Perusahaan: {{ $job->company->company_name }}</p>
                     <p class="text-sm text-gray-600">Diposting: {{ $job->created_at->diffForHumans() }}</p>
                     <a href="{{ route('job.show', $job->id) }}"
                         class="block bg-blue-600 text-white px-4 py-2 rounded-lg text-center mt-4">

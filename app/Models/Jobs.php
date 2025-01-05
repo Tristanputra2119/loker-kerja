@@ -31,4 +31,11 @@ class Jobs extends Model
     {
         return $this->hasMany(Testimonial::class, 'job_id', 'id');
     }
+
+    // Di model Job (Jobs.php)
+    public function acceptedUsers()
+    {
+        return $this->hasManyThrough(User::class, Application::class, 'job_id', 'id', 'id', 'user_id')
+            ->where('status', 'Accepted');
+    }
 }

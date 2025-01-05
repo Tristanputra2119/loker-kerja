@@ -67,6 +67,7 @@
         </div>
         <!-- Category buttons -->
         <div class="flex justify-center mt-6 flex-wrap gap-4">
+            @if($categories->isNotEmpty())
             @foreach($categories as $category)
             <a
                 href="{{ route('job.index', ['category' => $category->id]) }}"
@@ -74,7 +75,11 @@
                 {{ $category->name }}
             </a>
             @endforeach
+            @else
+            <p class="text-gray-600">Tidak ada kategori yang tersedia saat ini.</p>
+            @endif
         </div>
+
     </div>
 </section>
 

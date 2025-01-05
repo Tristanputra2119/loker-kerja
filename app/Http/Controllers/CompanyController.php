@@ -39,15 +39,7 @@ class CompanyController extends Controller
 
         return view('admin.companies.index', compact('companies'));
     }
-    
-    // public function show($id)
-    // {
-    //     $job = Jobs::findOrFail($id);
-    //     $testimonials = Testimonial::all();
-    //     $company = $job->company;
 
-    //     return view('user.job.detail', compact('job', 'company', 'testimonials'));
-    // }
 
     // Menampilkan form untuk membuat perusahaan baru
     public function create()
@@ -161,4 +153,5 @@ class CompanyController extends Controller
 
         return view('user.company.profile', compact('company'));
     }
+
 }

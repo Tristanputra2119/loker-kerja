@@ -9,6 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel Admin') }}</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
 
     <!-- Tailwind CSS -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -81,22 +82,6 @@
                         </a>
                     </li>
                     @endif
-
-                    <!-- Notifications Link: Only for Admin -->
-                    @if(auth()->user()->role === 'admin')
-                    <li>
-                        <a href="/notifications" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100 relative">
-                            <i class="fas fa-bell text-gray-500"></i>
-                            <span class="ml-3">Notifications</span>
-
-                            @if(isset($pendingNotifications) && $pendingNotifications->count() > 0)
-                            <span class="absolute top-0 right-0 inline-flex items-center justify-center w-4 h-4 text-xs font-semibold text-white bg-red-500 rounded-full">
-                                {{ $pendingNotifications->count() }}
-                            </span>
-                            @endif
-                        </a>
-                    </li>
-                    @endif
                 </ul>
             </nav>
         </aside>
@@ -119,7 +104,6 @@
                     <!-- Dropdown Menu -->
                     <div x-show="open" @click.outside="open = false" class="absolute right-0 mt-2 w-48 bg-white border rounded shadow-lg">
                         <a href="/profile" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Profile</a>
-                        <a href="/notifications" class="block px-4 py-2 text-gray-800 hover:bg-gray-100">Notifications</a>
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="block">
                             @csrf
                             <button type="submit" class="w-full text-left px-4 py-2 text-gray-800 hover:bg-gray-100">Logout</button>

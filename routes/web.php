@@ -1,6 +1,5 @@
 <?php
 
-use App\Http\Controllers\CompanyJob;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
@@ -14,7 +13,8 @@ use App\Http\Controllers\ApplicationController;
 use App\Http\Controllers\Companyjobcategory;
 use App\Http\Controllers\CompanyJobs;
 use App\Http\Controllers\JobCategoryController;
-use App\Http\Controllers\NotificationController;
+use App\Http\Controllers\TestimonialController;
+
 
 // Halaman Welcome
 Route::get('/', function () {
@@ -36,9 +36,9 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth', 'checkrole:user'])->group(function () {
-    Route::get('/user/landing', function () {
-        return view('user.landing');
-    })->name('user.landing');
+    Route::get('/user/home', function () {
+        return view('home');
+    })->name('user.home');
 });
 
 Route::get('/user/about', function () {
@@ -59,7 +59,7 @@ Route::get('/dashboard', [HomeController::class, 'dashboard'])->name('dashboard'
 
 // Company Jobs
 Route::resource('company/job_listing', CompanyJobs::class)->middleware('auth');
-Route::resource('company/job_applications',ApplicationController::class)->middleware('auth');
+Route::resource('company/job_applications', ApplicationController::class)->middleware('auth');
 // Profile Routes
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
@@ -73,10 +73,8 @@ Route::middleware('auth')->group(function () {
 });
 
 // Notification Routes
-Route::middleware('auth')->group(function () {
-    Route::get('notifications', [NotificationController::class, 'index'])->name('notifications.index');
-    Route::put('notifications/{id}', [NotificationController::class, 'update'])->name('notifications.update');
-});
+
+
 
 Route::resource('jobs', JobsController::class)->middleware('auth');
 Route::resource('job_categories', JobCategoryController::class)->middleware('auth');
@@ -102,3 +100,7 @@ Route::post('/job/{job}/apply', [JobsController::class, 'apply'])->name('user.jo
 // Company Profile
 Route::get('/company/{id}', [CompanyController::class, 'show'])->name('company.profile');
 
+// Testimonial Form
+Route::get('/job/{job}/testimonial', [JobsController::class, 'showTestimonialForm'])->name('job.testimonial.form');
+
+Route::post('/job/{jobId}/testimonial', [TestimonialController::class, 'storeTestimonial'])->name('user.testimonial.store');
