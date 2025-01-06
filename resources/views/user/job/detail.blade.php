@@ -42,90 +42,7 @@
 
                 <!-- Menampilkan status lamaran -->
                 @if ($applicationStatus === null)
-<<<<<<< HEAD
-                <!-- Form Apply -->
-                <div class="mt-8 space-y-4">
-                    <h2 class="text-lg font-medium text-gray-900">Apply untuk Pekerjaan ini</h2>
-                    <form method="POST" action="{{ route('user.job.apply', $job->id) }}" class="space-y-4" id="applyForm">
-                        @csrf
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="applicant_name"
-                                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2"
-                                value="{{ Auth::user()->name }}"
-                                required>
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="applicant_email"
-                                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2"
-                                value="{{ Auth::user()->email }}"
-                                required>
-                        </div>
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700">Pesan</label>
-                            <textarea
-                                id="message"
-                                name="message"
-                                rows="4"
-                                class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"></textarea>
-                        </div>
-                        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
-                            Kirim Lamaran
-                        </button>
-                    </form>
-                </div>
-                @elseif ($applicationStatus === 'Pending')
-                <div class="mt-8">
-                    <p class="text-yellow-600">Lamaran Anda sedang diperiksa, harap bersabar.</p>
-                </div>
-                @elseif ($applicationStatus === 'Accepted')
-                <div class="mt-8">
-                    <p class="text-green-600">Selamat Anda diterima di perusahaan ini</p>
-                </div>
-                @elseif ($applicationStatus === 'Rejected')
-                <div class="mt-8">
-                    <p class="text-red-600">Sayangnya lamaran Anda ditolak. Anda dapat mencoba melamar lagi.</p>
-                    <!-- Form Apply Ulang jika ditolak -->
-                    <form method="POST" action="{{ route('user.job.apply', $job->id) }}" class="space-y-4">
-                        @csrf
-                        <div>
-                            <label for="name" class="block text-sm font-medium text-gray-700">Nama Lengkap</label>
-                            <input
-                                type="text"
-                                id="name"
-                                name="applicant_name"
-                                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2"
-                                value="{{ Auth::user()->name }}"
-                                required>
-                        </div>
-                        <div>
-                            <label for="email" class="block text-sm font-medium text-gray-700">Email</label>
-                            <input
-                                type="email"
-                                id="email"
-                                name="applicant_email"
-                                class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2"
-                                value="{{ Auth::user()->email }}"
-                                required>
-                        </div>
-                        <div>
-                            <label for="message" class="block text-sm font-medium text-gray-700">Pesan</label>
-                            <textarea id="message" name="message" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 leading-tight resize-none"></textarea>
-                        </div>
-                        <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded focus:outline-none focus:ring-2 focus:ring-blue-400">
-                            Kirim Lamaran Ulang
-                        </button>
-                    </form>
-                </div>
-=======
-                    <!-- Form Apply -->
+                        <!-- Form Apply -->
                     <div class="mt-8 space-y-4">
                         <h2 class="text-lg font-medium text-gray-900">Apply untuk Pekerjaan ini</h2>
                         <form method="POST" action="{{ route('user.job.apply', $job->id) }}" class="space-y-4">
@@ -216,7 +133,6 @@
                             </button>
                         </form>
                     </div>
->>>>>>> 80094e3063ecbb7dbbaa8b83311b775677777d40
                 @endif
                 <p  class=" text-green-700">Status Lamaran: {{ $applicationStatus }}</p>
             </div>

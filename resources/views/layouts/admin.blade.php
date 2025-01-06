@@ -65,7 +65,7 @@
                     </li>
                     @endif
 
-                    @if(auth()->user()->role === 'company')
+                    @if(auth()->user()->role === 'admin')
                     <li>
                         <a href="/company/job_categories" class="flex items-center px-4 py-2 text-gray-700 hover:bg-gray-100">
                             <i class="fa-solid fa-list text-gray-500"></i>
