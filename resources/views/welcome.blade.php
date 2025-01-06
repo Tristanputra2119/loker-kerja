@@ -27,7 +27,7 @@
                     <a
                         href="{{ url('/dashboard') }}"
                         class="rounded-lg px-4 py-2 text-gray-700 bg-gray-100 hover:bg-gray-200 transition dark:bg-gray-800 dark:text-white dark:hover:bg-gray-700">
-                        Dashboard
+                        Landing Page
                     </a>
                     @else
                     <a
