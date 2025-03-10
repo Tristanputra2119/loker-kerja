@@ -72,7 +72,7 @@
                             <div>
                                 <label for="message" class="block text-sm font-medium text-gray-700">Pesan</label>
                                 <textarea
-                                    id="message"
+                                    id="description"
                                     name="message"
                                     rows="4"
                                     class="w-full px-4 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2">

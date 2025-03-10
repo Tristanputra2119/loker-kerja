@@ -20,17 +20,17 @@ class HomeController extends Controller
         $user = Auth::user();
 
         // Jika pengguna adalah admin, arahkan ke dashboard admin
-        if ($user->role === 'admin') {
+        if ($user->role === "admin") {
             return $this->adminDashboard();
         }
 
         // Jika pengguna adalah perusahaan, arahkan ke dashboard perusahaan
-        if ($user->role === 'company') {
+        if ($user->role === "company") {
             return $this->companyDashboard();
         }
 
         // Role lainnya diarahkan ke halaman home
-        return redirect()->route('home');
+        return redirect()->route("home");
     }
 
     /**
@@ -43,9 +43,12 @@ class HomeController extends Controller
         // Data untuk admin
         $UserTotal = User::count();
         $CompanyTotal = Company::count();
-        $Recent = User::orderBy('created_at', 'desc')->take(5)->get();
+        $Recent = User::orderBy("created_at", "desc")->take(5)->get();
 
-        return view('admin.dashboard.admin', compact('UserTotal', 'CompanyTotal', 'Recent'));
+        return view(
+            "admin.dashboard.admin",
+            compact("UserTotal", "CompanyTotal", "Recent")
+        );
     }
 
     /**
@@ -60,22 +63,38 @@ class HomeController extends Controller
 
         // Validasi jika user tidak terhubung dengan perusahaan
         if (!$company) {
-            return redirect()->route('home')->with('error', 'Anda tidak terkait dengan perusahaan mana pun.');
+            return redirect()
+                ->route("home")
+                ->with(
+                    "error",
+                    "Anda tidak terkait dengan perusahaan mana pun."
+                );
         }
 
         // Data untuk perusahaan
         $totalJobs = $company->jobs()->count();
-        $totalApplicants = Application::whereHas('job', function ($query) use ($company) {
-            $query->where('company_id', $company->id);
+        $totalApplicants = Application::whereHas("job", function ($query) use (
+            $company
+        ) {
+            $query->where("company_id", $company->id);
         })->count();
 
-        $recentApplicants = Application::whereHas('job', function ($query) use ($company) {
-            $query->where('company_id', $company->id);
-        })->with(['user', 'job'])->orderBy('created_at', 'desc')->take(5)->get();
+        $recentApplicants = Application::whereHas("job", function ($query) use (
+            $company
+        ) {
+            $query->where("company_id", $company->id);
+        })
+            ->with(["user", "job"])
+            ->orderBy("created_at", "desc")
+            ->take(5)
+            ->get();
 
-        $jobs = $company->jobs()->with('category')->get();
+        $jobs = $company->jobs()->with("category")->get();
 
-        return view('admin.dashboard.company', compact('totalJobs', 'totalApplicants', 'recentApplicants', 'jobs'));
+        return view(
+            "admin.dashboard.company",
+            compact("totalJobs", "totalApplicants", "recentApplicants", "jobs")
+        );
     }
 
     /**
@@ -89,12 +108,15 @@ class HomeController extends Controller
         $categories = JobCategory::all();
 
         // Jika role adalah admin atau perusahaan, arahkan ke dashboard
-        if ($user && ($user->role === 'admin' || $user->role === 'company')) {
-            return redirect()->route('dashboard');
+        if ($user && ($user->role === "admin" || $user->role === "company")) {
+            return redirect()->route("dashboard");
         }
 
-        $locations = ['Bali', 'Jakarta', 'Yogyakarta', 'Surabaya'];
+        $locations = ["Bali", "Jakarta", "Yogyakarta", "Surabaya"];
         // Tampilan untuk user biasa
-        return view('home', compact('categories'))->with('message', 'Selamat datang di aplikasi kami.');
+        return view("home", compact("categories"))->with(
+            "message",
+            "Selamat datang di aplikasi kami."
+        );
     }
 }
